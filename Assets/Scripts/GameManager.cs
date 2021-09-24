@@ -10,16 +10,12 @@ public class GameManager : MonoBehaviour
     public CameraMovement cameraMovement;
     public RoadManager roadManager;
     public InputManager inputManager;
-
     public UIController uiController;
-
     public StructureManager structureManager;
-
     public ObjectDetector objectDetector;
-
     public PathVisualizer pathVisualizer;
 
-    void Start()
+    private void Start()
     {
         uiController.OnRoadPlacement += RoadPlacementHandler;
         uiController.OnHousePlacement += HousePlacementHandler;
@@ -40,65 +36,41 @@ public class GameManager : MonoBehaviour
     {
         var hitObject = objectDetector.RaycastAll(ray);
         if (hitObject == null) return;
-        
         var agentScript = hitObject.GetComponent<AiAgent>();
-        
         if(agentScript != null) agentScript.ShowPath();
     }
 
     private void BigStructurePlacement()
     {
         ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceBigStructure, pos);
-        };
+        inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceBigStructure, pos);
         inputManager.OnEscape += HandleEscape;
     }
 
     private void SpecialPlacementHandler()
     {
         ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceSpecial, pos);
-        };
+        inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceSpecial, pos);
         inputManager.OnEscape += HandleEscape;
     }
 
     private void HousePlacementHandler()
     {
         ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceHouse, pos);
-        };
+        inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceHouse, pos);
         inputManager.OnEscape += HandleEscape;
     }
 
     private void RoadPlacementHandler()
     {
         ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(roadManager.PlaceRoad, pos);
-        };
+        inputManager.OnMouseClick += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
-        inputManager.OnMouseHold += (pos) =>
-        {
-            ProcessInputAndCall(roadManager.PlaceRoad, pos);
-        };
+        inputManager.OnMouseHold += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
         inputManager.OnEscape += HandleEscape;
     }
 
-    private void ClearInputActions()
-    {
-        inputManager.ClearEvents();
-    }
+    private void ClearInputActions() => inputManager.ClearEvents();
 
     private void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
@@ -109,8 +81,5 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
-    }
+    private void Update() => cameraMovement.MoveCamera(inputManager.CameraMovementVector);
 }
