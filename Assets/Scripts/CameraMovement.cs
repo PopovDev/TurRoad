@@ -8,7 +8,7 @@ namespace SVS
         public Camera gameCamera;
         public float cameraMovementSpeed = 5f;
         public float maxOrthographicSize = 5f, minOrthographicSize = 0.5f;
-        public float sensitivity = 885;
+        public float sensitivity = 5;
 
         private void Start() => gameCamera = GetComponent<Camera>();
 
