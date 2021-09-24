@@ -320,7 +320,7 @@ Camera:
   m_GameObject: {fileID: 2044889009}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -380,7 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23955f40d60750642a649bbde1a07458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCamera: {fileID: 0}
   cameraMovementSpeed: 5
   maxOrthographicSize: 5
   minOrthographicSize: 0.5
