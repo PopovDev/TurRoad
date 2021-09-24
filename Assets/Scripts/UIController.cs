@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Action OnRoadPlacement, OnHousePlacement, OnSpecialPlacement, OnBigStructurePlacement;
-    public Button placeRoadButton, placeHouseButton, placeSpecialButton, placeBigStructureButton;
+    public Action OnRoadPlacement, OnHousePlacement, OnSpecialPlacement;
+    public Button placeRoadButton, placeHouseButton, placeSpecialButton;
 
     public Color outlineColor;
     private List<Button> _buttonList;
 
     private void Start()
     {
-        _buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigStructureButton };
+        _buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton };
 
         placeRoadButton.onClick.AddListener(() =>
         {
@@ -34,13 +34,6 @@ public class UIController : MonoBehaviour
             ResetButtonColor();
             ModifyOutline(placeSpecialButton);
             OnSpecialPlacement?.Invoke();
-
-        });
-        placeBigStructureButton.onClick.AddListener(() =>
-        {
-            ResetButtonColor();
-            ModifyOutline(placeBigStructureButton);
-            OnBigStructurePlacement?.Invoke();
 
         });
     }

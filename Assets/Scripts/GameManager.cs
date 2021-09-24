@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         uiController.OnRoadPlacement += RoadPlacementHandler;
         uiController.OnHousePlacement += HousePlacementHandler;
         uiController.OnSpecialPlacement += SpecialPlacementHandler;
-        uiController.OnBigStructurePlacement += BigStructurePlacement;
         inputManager.OnEscape += HandleEscape;
     }
 
@@ -38,13 +37,6 @@ public class GameManager : MonoBehaviour
         if (hitObject == null) return;
         var agentScript = hitObject.GetComponent<AiAgent>();
         if(agentScript != null) agentScript.ShowPath();
-    }
-
-    private void BigStructurePlacement()
-    {
-        ClearInputActions();
-        inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceBigStructure, pos);
-        inputManager.OnEscape += HandleEscape;
     }
 
     private void SpecialPlacementHandler()
