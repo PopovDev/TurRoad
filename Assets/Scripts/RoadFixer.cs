@@ -59,7 +59,7 @@ public class RoadFixer : MonoBehaviour
     }
 
     //[left, up, right, down]
-    private void CreateCorner(PlacementManager placementManager, CellType[] result, Vector3Int temporaryPosition)
+    private void CreateCorner(PlacementManager placementManager, IReadOnlyList<CellType> result, Vector3Int temporaryPosition)
     {
         if (result[1] == CellType.Road && result[2] == CellType.Road )
         {
@@ -80,7 +80,7 @@ public class RoadFixer : MonoBehaviour
     }
 
     //[left, up, right, down]
-    private bool CreateStraightRoad(PlacementManager placementManager, CellType[] result, Vector3Int temporaryPosition)
+    private bool CreateStraightRoad(PlacementManager placementManager, IReadOnlyList<CellType> result, Vector3Int temporaryPosition)
     {
         if (result[0] == CellType.Road && result[2] == CellType.Road)
         {
@@ -95,23 +95,15 @@ public class RoadFixer : MonoBehaviour
     }
 
     //[left, up, right, down]
-    private void CreateDeadEnd(PlacementManager placementManager, CellType[] result, Vector3Int temporaryPosition)
+    private void CreateDeadEnd(PlacementManager placementManager, IReadOnlyList<CellType> result, Vector3Int temporaryPosition)
     {
-        if (result[1] == CellType.Road )
-        {
+        if (result[1] == CellType.Road)
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, Quaternion.Euler(0, 270, 0));
-        }
-        else if (result[2] == CellType.Road )
-        {
+        else if (result[2] == CellType.Road)
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, Quaternion.identity);
-        }
-        else if (result[3] == CellType.Road )
-        {
+        else if (result[3] == CellType.Road)
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, Quaternion.Euler(0, 90, 0));
-        }
         else if (result[0] == CellType.Road )
-        {
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, Quaternion.Euler(0, 180, 0));
-        }
     }
 }

@@ -18,7 +18,7 @@ namespace SimpleCity.AI
         {
             foreach (var house in placementManager.GetAllHouses())
             {
-                TrySpawnACar(house, placementManager.GetRandomSpecialStrucutre());
+                TrySpawnACar(house, placementManager.GetRandomSpecialStructure());
             }
         }
 

@@ -417,10 +417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23955f40d60750642a649bbde1a07458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCamera: {fileID: 0}
-  cameraMovementSpeed: 5
-  maxOrthographicSize: 5
-  minOrthographicSize: 0.5
+  speed: 5
+  maxSize: 5
+  minSize: 0.5
   sensitivity: 10
 --- !u!4 &2069291527 stripped
 Transform:
@@ -798,7 +797,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1260302645792573126, guid: 7adc276f5ee0ef143bda2adc13ea228c, type: 3}
       propertyPath: m_Name
-      value: PlacementManager
+      value: Placement
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260302645792573127, guid: 7adc276f5ee0ef143bda2adc13ea228c, type: 3}
+      propertyPath: width
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260302645792573127, guid: 7adc276f5ee0ef143bda2adc13ea228c, type: 3}
+      propertyPath: height
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7adc276f5ee0ef143bda2adc13ea228c, type: 3}
