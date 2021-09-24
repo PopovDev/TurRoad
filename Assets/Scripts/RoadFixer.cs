@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,23 +10,25 @@ public class RoadFixer : MonoBehaviour
     {
         //[right, up, left, down]
         var result = placementManager.GetNeighbourTypesFor(temporaryPosition);
-        int roadCount = 0;
-        roadCount = result.Where(x => x == CellType.Road).Count();
-        if(roadCount == 0 || roadCount == 1)
+        var roadCount = 0;
+        roadCount = result.Count(x => x == CellType.Road);
+        switch (roadCount)
         {
-            CreateDeadEnd(placementManager, result, temporaryPosition);
-        }else if(roadCount == 2)
-        {
-            if (CreateStraightRoad(placementManager, result, temporaryPosition))
+            case 0:
+            case 1:
+                CreateDeadEnd(placementManager, result, temporaryPosition);
+                break;
+            case 2 when CreateStraightRoad(placementManager, result, temporaryPosition):
                 return;
-            CreateCorner(placementManager, result, temporaryPosition);
-        }else if(roadCount == 3)
-        {
-            Create3Way(placementManager, result, temporaryPosition);
-        }
-        else
-        {
-            Create4Way(placementManager, result, temporaryPosition);
+            case 2:
+                CreateCorner(placementManager, result, temporaryPosition);
+                break;
+            case 3:
+                Create3Way(placementManager, result, temporaryPosition);
+                break;
+            default:
+                Create4Way(placementManager, result, temporaryPosition);
+                break;
         }
     }
 
@@ -38,7 +38,7 @@ public class RoadFixer : MonoBehaviour
     }
 
     //[left, up, right, down]
-    private void Create3Way(PlacementManager placementManager, CellType[] result, Vector3Int temporaryPosition)
+    private void Create3Way(PlacementManager placementManager, IReadOnlyList<CellType> result, Vector3Int temporaryPosition)
     {
         if(result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.Road)
         {
