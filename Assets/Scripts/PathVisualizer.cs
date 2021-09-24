@@ -6,39 +6,31 @@ using UnityEngine;
 
 public class PathVisualizer : MonoBehaviour
 {
-    LineRenderer lineRenderer;
-    AiAgent currentAgent;
+    private LineRenderer _lineRenderer;
+    private AiAgent _currentAgent;
 
     private void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 0;
+        _lineRenderer = GetComponent<LineRenderer>();
+        _lineRenderer.positionCount = 0;
     }
 
     public void ShowPath(List<Vector3> path, AiAgent agent, Color color)
     {
         ResetPath();
-        lineRenderer.positionCount = path.Count;
-        lineRenderer.startColor = color;
-        lineRenderer.endColor = color;
-        for (int i = 0; i < path.Count; i++)
-        {
-            lineRenderer.SetPosition(i, path[i] + new Vector3(0, agent.transform.position.y, 0));
-        }
-        currentAgent = agent;
-        currentAgent.OnDeath += ResetPath;
+        _lineRenderer.positionCount = path.Count;
+        _lineRenderer.startColor = color;
+        _lineRenderer.endColor = color;
+        for (var i = 0; i < path.Count; i++)
+            _lineRenderer.SetPosition(i, path[i] + new Vector3(0, agent.transform.position.y, 0));
+        _currentAgent = agent;
+        _currentAgent.OnDeath += ResetPath;
     }
 
     public void ResetPath()
     {
-        if(lineRenderer != null)
-        {
-            lineRenderer.positionCount = 0;
-        }
-        if(currentAgent != null)
-        {
-            currentAgent.OnDeath -= ResetPath;
-        }
-        currentAgent = null;
+        if(_lineRenderer != null) _lineRenderer.positionCount = 0;
+        if(_currentAgent != null) _currentAgent.OnDeath -= ResetPath;
+        _currentAgent = null;
     }
 }

@@ -40,7 +40,7 @@ public class GridSearch {
 
             foreach (Point neighbour in grid.GetAdjacentCells(current, isAgent))
             {
-                float newCost = costDictionary[current] + grid.GetCostOfEnteringCell(neighbour);
+                float newCost = costDictionary[current] + Grid.GetCostOfEnteringCell(neighbour);
                 if (!costDictionary.ContainsKey(neighbour) || newCost < costDictionary[neighbour])
                 {
                     costDictionary[neighbour] = newCost;
