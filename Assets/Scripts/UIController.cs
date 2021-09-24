@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +9,11 @@ public class UIController : MonoBehaviour
     public Button placeRoadButton, placeHouseButton, placeSpecialButton, placeBigStructureButton;
 
     public Color outlineColor;
-    List<Button> buttonList;
+    private List<Button> _buttonList;
 
     private void Start()
     {
-        buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigStructureButton };
+        _buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigStructureButton };
 
         placeRoadButton.onClick.AddListener(() =>
         {
@@ -55,7 +54,7 @@ public class UIController : MonoBehaviour
 
     public void ResetButtonColor()
     {
-        foreach (var button in buttonList)
+        foreach (var button in _buttonList)
         {
             button.GetComponent<Outline>().enabled = false;
         }
