@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SVS
 {
@@ -6,21 +7,20 @@ namespace SVS
     public class CameraMovement : MonoBehaviour
     {
         private Camera _gameCamera;
-        public float cameraMovementSpeed = 5f;
-        public float maxOrthographicSize = 5f, minOrthographicSize = 0.5f;
-        public float sensitivity = 10;
+        [SerializeField]
+        private float speed = 5f,maxSize = 5f,minSize = 0.5f,sensitivity = 10;
         private void Start() => _gameCamera = GetComponent<Camera>();
 
         public void MoveCamera(Vector3 inputVector)
         {
             var movementVector = Quaternion.Euler(0,30,0) * inputVector;
-            _gameCamera.transform.position += movementVector * Time.deltaTime * cameraMovementSpeed;
+            _gameCamera.transform.position += movementVector * Time.deltaTime * speed;
         }
 
         private void Update()
         {
             var scrollInput = Input.GetAxis("Mouse ScrollWheel") * sensitivity;
-            _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - scrollInput, minOrthographicSize, maxOrthographicSize);
+            _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - scrollInput, minSize, maxSize);
         }
     }
 }

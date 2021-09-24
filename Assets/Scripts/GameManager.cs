@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick += TrySelectingAgent;
     }
 
-    private void TrySelectingAgent(Ray ray)
+    private static void TrySelectingAgent(Ray ray)
     {
         var hitObject = ObjectDetector.RaycastAll(ray);
         if (hitObject == null) return;
