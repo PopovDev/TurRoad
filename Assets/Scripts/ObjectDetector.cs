@@ -8,23 +8,13 @@ public class ObjectDetector : MonoBehaviour
 
     public Vector3Int? RaycastGround(Ray ray)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
-        {
-            Transform objectHit = hit.transform;
-            Vector3Int positionInt = Vector3Int.RoundToInt(hit.point);
-            return positionInt;
-        }
-        return null;
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, groundMask)) return null;
+        var positionInt = Vector3Int.RoundToInt(hit.point);
+        return positionInt;
     }
 
-    public GameObject RaycastAll(Ray ray)
+    public static GameObject RaycastAll(Ray ray)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            return hit.transform.gameObject;
-        }
-        return null;
+        return Physics.Raycast(ray, out var hit, Mathf.Infinity) ? hit.transform.gameObject : null;
     }
 }

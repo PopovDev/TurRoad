@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void TrySelectingAgent(Ray ray)
     {
-        var hitObject = objectDetector.RaycastAll(ray);
+        var hitObject = ObjectDetector.RaycastAll(ray);
         if (hitObject == null) return;
         var agentScript = hitObject.GetComponent<AiAgent>();
         if(agentScript != null) agentScript.ShowPath();
