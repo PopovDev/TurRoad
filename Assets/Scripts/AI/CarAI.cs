@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class CarAI : MonoBehaviour
 {
@@ -16,15 +18,17 @@ public class CarAI : MonoBehaviour
     internal bool IsThisLastPathIndex() => _index >= _path.Count - 1;
 
     private int _index;
-
-    private bool _stop;
+    
+    [SerializeField]
+    private bool stop;
 
     private bool _collisionStop;
 
+    
     public bool Stop
     {
-        get => _stop || _collisionStop;
-        set => _stop = value;
+        get => stop || _collisionStop;
+        set => stop = value;
     }
 
     private UnityEvent<Vector2> OnDrive { get; }= new UnityEvent<Vector2>();

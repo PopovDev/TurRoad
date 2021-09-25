@@ -14,7 +14,7 @@ namespace SimpleCity.AI
         [SerializeField]
         protected bool hasCrosswalks;
 
-        private const float approximateThresholdCorner = 0.3f;
+        private const float ApproximateThresholdCorner = 0.3f;
 
         [SerializeField]
         private Marker incomming, outgoing;
@@ -25,10 +25,7 @@ namespace SimpleCity.AI
             return outgoing;
         }
 
-        public virtual Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
-        {
-            return incomming;
-        }
+        public virtual Marker GetPositionForCarToEnd(Vector3 previousPathPosition) => incomming;
 
         protected static Marker GetClosestMarkerTo(Vector3 structurePosition, List<Marker> pedestrianMarkers)
         {
