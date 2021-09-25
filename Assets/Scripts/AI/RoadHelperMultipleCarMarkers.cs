@@ -10,11 +10,11 @@ public class RoadHelperMultipleCarMarkers : RoadHelper
 
     public override Marker GetPositionForCarToSpawn(Vector3 nextPathPosition)
     {
-        return GetClosestMarkeTo(nextPathPosition, outgoingMarkers);
+        return GetClosestMarkerTo(nextPathPosition, outgoingMarkers);
     }
 
     public override Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
     {
-        return GetClosestMarkeTo(previousPathPosition, incommingMarkers);
+        return GetClosestMarkerTo(previousPathPosition, incommingMarkers);
     }
 }

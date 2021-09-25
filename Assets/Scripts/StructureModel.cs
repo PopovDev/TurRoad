@@ -25,7 +25,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     internal List<Marker> GetCarMarkers()
     {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetAllCarMarkers();
+        return transform.GetChild(0).GetComponent<RoadHelper>().carMarkers;
     }
 
     public Vector3 GetNearestCarMarkerTo(Vector3 position)
