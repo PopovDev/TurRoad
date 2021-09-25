@@ -16,10 +16,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public void SwapModel(GameObject model, Quaternion rotation)
     {
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
+        foreach (Transform child in transform) Destroy(child.gameObject);
         var structure = Instantiate(model, transform);
         structure.transform.localPosition = new Vector3(0, _yHeight, 0);
         structure.transform.localRotation = rotation;
@@ -52,11 +49,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public Marker GetCarSpawnMarker(Vector3Int nextPathPosition)
     {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetPositioForCarToSpawn(nextPathPosition);
+        return transform.GetChild(0).GetComponent<RoadHelper>().GetPositionForCarToSpawn(nextPathPosition);
     }
 
     public Marker GetCarEndMarker(Vector3Int previousPathPosition)
     {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetPositioForCarToEnd(previousPathPosition);
+        return transform.GetChild(0).GetComponent<RoadHelper>().GetPositionForCarToEnd(previousPathPosition);
     }
 }

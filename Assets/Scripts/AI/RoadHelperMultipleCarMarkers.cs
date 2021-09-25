@@ -8,12 +8,12 @@ public class RoadHelperMultipleCarMarkers : RoadHelper
     [SerializeField]
     protected List<Marker> incommingMarkers, outgoingMarkers;
 
-    public override Marker GetPositioForCarToSpawn(Vector3 nextPathPosition)
+    public override Marker GetPositionForCarToSpawn(Vector3 nextPathPosition)
     {
         return GetClosestMarkeTo(nextPathPosition, outgoingMarkers);
     }
 
-    public override Marker GetPositioForCarToEnd(Vector3 previousPathPosition)
+    public override Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
     {
         return GetClosestMarkeTo(previousPathPosition, incommingMarkers);
     }

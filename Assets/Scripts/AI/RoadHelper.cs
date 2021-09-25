@@ -26,12 +26,12 @@ namespace SimpleCity.AI
             return GetClosestMarkeTo(structurePosition, pedestrianMarkers);
         }
 
-        public virtual Marker GetPositioForCarToSpawn(Vector3 nextPathPosition)
+        public virtual Marker GetPositionForCarToSpawn(Vector3 nextPathPosition)
         {
             return outgoing;
         }
 
-        public virtual Marker GetPositioForCarToEnd(Vector3 previousPathPosition)
+        public virtual Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
         {
             return incomming;
         }

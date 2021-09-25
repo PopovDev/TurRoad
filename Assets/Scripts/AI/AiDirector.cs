@@ -9,8 +9,10 @@ namespace SimpleCity.AI
 {
     public class AiDirector : MonoBehaviour
     {
-        public PlacementManager placementManager;
-        public GameObject carPrefab;
+        [SerializeField]
+        private PlacementManager placementManager;
+        [SerializeField]
+        private GameObject carPrefab;
         private readonly AdjacencyGraph _carGraph = new AdjacencyGraph();
         private List<Vector3> _carPath = new List<Vector3>();
         
@@ -25,14 +27,14 @@ namespace SimpleCity.AI
         private void TrySpawnACar(StructureModel startStructure, StructureModel endStructure)
         {
             if (startStructure == null || endStructure == null) return;
-            var startRoadPosition = ((INeedingRoad)startStructure).RoadPosition;
-            var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
+            
+            var startRoadPosition = startStructure.RoadPosition;
+            var endRoadPosition = endStructure.RoadPosition;
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
             path.Reverse();
 
-            if (path.Count == 0 && path.Count>2)
-                return;
+            if (path.Count == 0 && path.Count>2) return;
 
             var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
 
@@ -40,16 +42,15 @@ namespace SimpleCity.AI
 
             _carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
 
-            if (_carPath.Count <= 0) return;
+            if (!_carPath.Any()) return;
             
             var car = Instantiate(carPrefab, startMarkerPosition.Position, Quaternion.identity);
             car.GetComponent<CarAI>().SetPath(_carPath);
         }
 
 
-        private List<Vector3> GetCarPath([NotNull] List<Vector3Int> path, Vector3 startPosition, Vector3 endPosition)
+        private List<Vector3> GetCarPath(IReadOnlyList<Vector3Int> path, Vector3 startPosition, Vector3 endPosition)
         {
-            if (path == null) throw new ArgumentNullException(nameof(path));
             _carGraph.ClearGraph();
             CreatACarGraph(path);
             Debug.Log(_carGraph);
@@ -100,9 +101,7 @@ namespace SimpleCity.AI
         {
           
             for (var i = 1; i < _carPath.Count; i++)
-            {
                 Debug.DrawLine(_carPath[i - 1] + Vector3.up, _carPath[i] + Vector3.up, Color.magenta);
-            }
         }
 
 

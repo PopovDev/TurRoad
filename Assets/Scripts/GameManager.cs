@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public UIController uiController;
     public StructureManager structureManager;
     public ObjectDetector objectDetector;
-    public PathVisualizer pathVisualizer;
 
     private void Start()
     {
@@ -27,7 +26,6 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         uiController.ResetButtonColor();
-        pathVisualizer.ResetPath();
         inputManager.OnMouseClick += TrySelectingAgent;
     }
 
@@ -35,8 +33,6 @@ public class GameManager : MonoBehaviour
     {
         var hitObject = ObjectDetector.RaycastAll(ray);
         if (hitObject == null) return;
-        var agentScript = hitObject.GetComponent<AiAgent>();
-        if(agentScript != null) agentScript.ShowPath();
     }
 
     private void SpecialPlacementHandler()
