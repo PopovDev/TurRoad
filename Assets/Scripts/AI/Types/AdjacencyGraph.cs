@@ -22,10 +22,7 @@ namespace SimpleCity.AI
             _adjacencyDictionary.Add(v, new List<Vertex>());
         }
 
-        private Vertex GetVertexAt(Vector3 position)
-        {
-            return _adjacencyDictionary.Keys.FirstOrDefault(x => CompareVertices(position, x.Position));
-        }
+        private Vertex GetVertexAt(Vector3 position) => _adjacencyDictionary.Keys.FirstOrDefault(x => CompareVertices(position, x.Position));
 
         private static bool CompareVertices(Vector3 position1, Vector3 position2) => Vector3.SqrMagnitude(position1 - position2) < 0.0001f;
 
