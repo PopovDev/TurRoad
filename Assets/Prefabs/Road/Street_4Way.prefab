@@ -201,6 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4792354121010302993}
+  - component: {fileID: 3118751003732502305}
   m_Layer: 0
   m_Name: Lights
   m_TagString: Untagged
@@ -224,6 +225,21 @@ Transform:
   m_Father: {fileID: 5155644068091976813}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3118751003732502305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483546226371571876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3994780718acc304cacb3a3be9a4a165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1: {fileID: 3260801693883678542}
+  p2: {fileID: 2580978606830280617}
+  state: 0
 --- !u!1 &3351635067702010651
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,23 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCar: {fileID: 0}
-  pedestrianWaiting: 0
-  pedestrianWalking: 0
-  <OnPedestrianCanWalk>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SmartCrosswalks, Assembly-CSharp
-        m_MethodName: MovePedestrians
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  exited: []
 --- !u!1 &4705868803914468636
 GameObject:
   m_ObjectHideFlags: 0

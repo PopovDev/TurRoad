@@ -1,8 +1,7 @@
 using UnityEngine;
 public class LightControl : MonoBehaviour
 {
-    [SerializeField]
-    private bool canRun;
+    public bool canRun;
     private SmartRoad _road;
     private void Start() => _road = GetComponentInParent<SmartRoad>();
     private void OnTriggerExit(Collider other)
