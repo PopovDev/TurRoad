@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-
 public class CarAI : MonoBehaviour
 {
     private List<Vector3> _path;
@@ -16,12 +11,9 @@ public class CarAI : MonoBehaviour
     [SerializeField] private float collisionRaycastLength = 0.1f;
 
     internal bool IsThisLastPathIndex() => _index >= _path.Count - 1;
-
     private int _index;
-    
     [SerializeField]
     private bool stop;
-
     private bool _collisionStop;
 
     
@@ -30,9 +22,7 @@ public class CarAI : MonoBehaviour
         get => stop || _collisionStop;
         set => stop = value;
     }
-
     private UnityEvent<Vector2> OnDrive { get; }= new UnityEvent<Vector2>();
-
     private void Start()
     {
         OnDrive.AddListener(GetComponent<CarController>().Move);
