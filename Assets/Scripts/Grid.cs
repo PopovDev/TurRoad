@@ -22,7 +22,7 @@ public class Point
     {
         unchecked
         {
-            int hash = 6949;
+            var hash = 6949;
             hash = hash * 7907 + X.GetHashCode();
             hash = hash * 7907 + Y.GetHashCode();
             return hash;
@@ -32,6 +32,7 @@ public class Point
     public override string ToString()
     {
         return "P(" + X + ", " + Y + ")";
+        
     }
 }
 

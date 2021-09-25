@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public InputManager inputManager;
     public UIController uiController;
     public StructureManager structureManager;
-    public ObjectDetector objectDetector;
 
     private void Start()
     {
@@ -26,14 +25,8 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         uiController.ResetButtonColor();
-        inputManager.OnMouseClick += TrySelectingAgent;
     }
 
-    private static void TrySelectingAgent(Ray ray)
-    {
-        var hitObject = ObjectDetector.RaycastAll(ray);
-        if (hitObject == null) return;
-    }
 
     private void SpecialPlacementHandler()
     {
@@ -60,13 +53,19 @@ public class GameManager : MonoBehaviour
 
     private void ClearInputActions() => inputManager.ClearEvents();
 
-    private void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
+    private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
-        var result = objectDetector.RaycastGround(ray);
+        var result = RaycastGround(ray);
         if (result.HasValue)
             callback.Invoke(result.Value);
     }
 
+    private static Vector3Int? RaycastGround(Ray ray)
+    {
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity)) return null;
+        var positionInt = Vector3Int.RoundToInt(hit.point);
+        return positionInt;
+    }
 
 
     private void Update() => cameraMovement.MoveCamera(inputManager.CameraMovementVector);

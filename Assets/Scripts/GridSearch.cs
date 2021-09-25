@@ -1,83 +1,61 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-/// <summary>
-/// Source https://github.com/lordjesus/Packt-Introduction-to-graph-algorithms-for-game-developers
-/// </summary>
-public class GridSearch {
-
-    public struct SearchResult
+public static class GridSearch {
+    
+    public static IEnumerable<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
     {
-        public List<Point> Path { get; set; }
-    }
+        var path = new List<Point>();
 
-    public static List<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
-    {
-        List<Point> path = new List<Point>();
+        var positionsCheck = new List<Point>();
+        var costDictionary = new Dictionary<Point, float>();
+        var priorityDictionary = new Dictionary<Point, float>();
+        var parentsDictionary = new Dictionary<Point, Point>();
 
-        List<Point> positionsTocheck = new List<Point>();
-        Dictionary<Point, float> costDictionary = new Dictionary<Point, float>();
-        Dictionary<Point, float> priorityDictionary = new Dictionary<Point, float>();
-        Dictionary<Point, Point> parentsDictionary = new Dictionary<Point, Point>();
-
-        positionsTocheck.Add(startPosition);
+        positionsCheck.Add(startPosition);
         priorityDictionary.Add(startPosition, 0);
         costDictionary.Add(startPosition, 0);
         parentsDictionary.Add(startPosition, null);
 
-        while (positionsTocheck.Count > 0)
+        while (positionsCheck.Count > 0)
         {
-            Point current = GetClosestVertex(positionsTocheck, priorityDictionary);
-            positionsTocheck.Remove(current);
+            var current = GetClosestVertex(positionsCheck, priorityDictionary);
+            positionsCheck.Remove(current);
             if (current.Equals(endPosition))
             {
                 path = GeneratePath(parentsDictionary, current);
                 return path;
             }
 
-            foreach (Point neighbour in grid.GetAdjacentCells(current, isAgent))
+            foreach (var neighbour in grid.GetAdjacentCells(current, isAgent))
             {
-                float newCost = costDictionary[current] + Grid.GetCostOfEnteringCell(neighbour);
-                if (!costDictionary.ContainsKey(neighbour) || newCost < costDictionary[neighbour])
-                {
-                    costDictionary[neighbour] = newCost;
-
-                    float priority = newCost + ManhattanDiscance(endPosition, neighbour);
-                    positionsTocheck.Add(neighbour);
-                    priorityDictionary[neighbour] = priority;
-
-                    parentsDictionary[neighbour] = current;
-                }
+                var newCost = costDictionary[current] + Grid.GetCostOfEnteringCell(neighbour);
+                if (costDictionary.ContainsKey(neighbour) && !(newCost < costDictionary[neighbour])) continue;
+                costDictionary[neighbour] = newCost;
+                var priority = newCost + ManhattanDistance(endPosition, neighbour);
+                positionsCheck.Add(neighbour);
+                priorityDictionary[neighbour] = priority;
+                parentsDictionary[neighbour] = current;
             }
         }
         return path;
     }
 
-    private static Point GetClosestVertex(List<Point> list, Dictionary<Point, float> distanceMap)
+    private static Point GetClosestVertex(IReadOnlyList<Point> list, IReadOnlyDictionary<Point, float> distanceMap)
     {
-        Point candidate = list[0];
-        foreach (Point vertex in list)
-        {
-            if (distanceMap[vertex] < distanceMap[candidate])
-            {
-                candidate = vertex;
-            }
-        }
+        var candidate = list[0];
+        foreach (var vertex in list.Where(vertex => distanceMap[vertex] < distanceMap[candidate])) candidate = vertex;
         return candidate;
     }
 
-    private static float ManhattanDiscance(Point endPos, Point point)
-    {
-        return Math.Abs(endPos.X - point.X) + Math.Abs(endPos.Y - point.Y);
-    }
+    private static float ManhattanDistance(Point endPos, Point point) => 
+        Math.Abs(endPos.X - point.X) + Math.Abs(endPos.Y - point.Y);
 
-    public static List<Point> GeneratePath(Dictionary<Point, Point> parentMap, Point endState)
+    private static List<Point> GeneratePath(IReadOnlyDictionary<Point, Point> parentMap, Point endState)
     {
-        List<Point> path = new List<Point>();
-        Point parent = endState;
+        var path = new List<Point>();
+        var parent = endState;
         while (parent != null && parentMap.ContainsKey(parent))
         {
             path.Add(parent);
