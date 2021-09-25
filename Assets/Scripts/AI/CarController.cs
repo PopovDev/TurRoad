@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    Rigidbody rb;
+    private Rigidbody _rb;
 
     [SerializeField]
     private float power = 5;
@@ -17,23 +17,17 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private Vector2 movementVector;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    private void Awake() => _rb = GetComponent<Rigidbody>();
 
-    public void Move(Vector2 movementInput)
-    {
-        this.movementVector = movementInput;
-    }
+    public void Move(Vector2 movementInput) => movementVector = movementInput;
 
     private void FixedUpdate()
     {
-        if(rb.velocity.magnitude < maxSpeed)
+        if(_rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddForce(movementVector.y * transform.forward * power);
+            _rb.AddForce(movementVector.y * transform.forward * power);
         }
-        rb.AddTorque(movementVector.x * Vector3.up * torque * movementVector.y);
+        _rb.AddTorque(movementVector.x * Vector3.up * torque * movementVector.y);
     }
 
 }

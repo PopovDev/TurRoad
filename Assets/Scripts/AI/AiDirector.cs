@@ -16,6 +16,7 @@ namespace SimpleCity.AI
         private readonly AdjacencyGraph _carGraph = new AdjacencyGraph();
         private List<Vector3> _carPath = new List<Vector3>();
         
+        //ToDo: Сделать спавн для каждой
       public void SpawnACar()
         {
             foreach (var house in placementManager.GetAllHouses())
@@ -72,9 +73,7 @@ namespace SimpleCity.AI
                 {
                     _carGraph.AddVertex(marker.Position);
                     foreach (var markerNeighbour in marker.adjacentMarkers)
-                    {
                         _carGraph.AddEdge(marker.Position, markerNeighbour.Position);
-                    }
 
                     if (!marker.OpenForConnection || i + 1 >= path.Count) continue;
                     var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
@@ -99,7 +98,6 @@ namespace SimpleCity.AI
         
         private void Update()
         {
-          
             for (var i = 1; i < _carPath.Count; i++)
                 Debug.DrawLine(_carPath[i - 1] + Vector3.up, _carPath[i] + Vector3.up, Color.magenta);
         }

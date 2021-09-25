@@ -11,7 +11,7 @@ public class SmartRoad : MonoBehaviour
     public CarAI currentCar;
 
     [SerializeField]
-    private bool pedestrianWaiting = false, pedestrianWalking = false;
+    private bool pedestrianWaiting, pedestrianWalking;
 
     [field: SerializeField] private UnityEvent OnPedestrianCanWalk { get; set; }
 

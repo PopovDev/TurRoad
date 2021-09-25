@@ -10,7 +10,8 @@ namespace SimpleCity.AI
     {
         public Vector3 Position => transform.position;
 
-        [SerializeField] public List<Marker> adjacentMarkers;
+        [SerializeField] 
+        public List<Marker> adjacentMarkers;
 
         [SerializeField]
         private bool openForConnections;
@@ -21,7 +22,6 @@ namespace SimpleCity.AI
         private void OnDrawGizmos()
         {
             //if (Selection.activeObject != gameObject) return;
-            
             Gizmos.color = Color.red;
             if (adjacentMarkers.Count > 0)
                 foreach (var item in adjacentMarkers)

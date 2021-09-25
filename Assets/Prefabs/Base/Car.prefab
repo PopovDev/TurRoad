@@ -126,7 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07c9c03ed6ed104c9c79355ef33bba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: []
   arriveDistance: 0.2
   lastPointArriveDistance: 0.1
   turningAngleOffset: 5
@@ -137,7 +136,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -7368483073046397102}
-        m_TargetAssemblyTypeName: CarController, _ProjectAssembly
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:

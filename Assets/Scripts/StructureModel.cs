@@ -22,20 +22,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         structure.transform.localRotation = rotation;
     }
 
-    public Vector3 GetNearestPedestrianMarkerTo(Vector3 position)
-    {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetClosestPedestrainPosition(position);
-    }
-
-    public Marker GetPedestrianSpawnMarker(Vector3 position)
-    {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetpositioForPedestrianToSpwan(position);
-    }
-
-    public List<Marker> GetPedestrianMarkers()
-    {
-        return transform.GetChild(0).GetComponent<RoadHelper>().GetAllPedestrianMarkers();
-    }
 
     internal List<Marker> GetCarMarkers()
     {

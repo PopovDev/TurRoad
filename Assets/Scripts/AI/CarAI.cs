@@ -6,66 +6,54 @@ using UnityEngine.Events;
 
 public class CarAI : MonoBehaviour
 {
-    [SerializeField]
-    private List<Vector3> path = null;
-    [SerializeField]
-    private float arriveDistance = .3f, lastPointArriveDistance = .1f;
-    [SerializeField]
-    private float turningAngleOffset = 5;
-    [SerializeField]
-    private Vector3 currentTargetPosition;
+    private List<Vector3> _path;
+    [SerializeField] private float arriveDistance = .3f, lastPointArriveDistance = .1f;
+    [SerializeField] private float turningAngleOffset = 5;
+    [SerializeField] private Vector3 currentTargetPosition;
+    [SerializeField] private GameObject raycastStartingPoint;
+    [SerializeField] private float collisionRaycastLength = 0.1f;
 
-    [SerializeField]
-    private GameObject raycastStartingPoint = null;
-    [SerializeField]
-    private float collisionRaycastLength = 0.1f;
+    internal bool IsThisLastPathIndex() => _index >= _path.Count - 1;
 
-    internal bool IsThisLastPathIndex()
-    {
-        return index >= path.Count-1;
-    }
+    private int _index;
 
-    private int index = 0;
+    private bool _stop;
 
-    private bool stop;
-    private bool collisionStop = false;
+    private bool _collisionStop;
 
     public bool Stop
     {
-        get { return stop || collisionStop; }
-        set { stop = value; }
+        get => _stop || _collisionStop;
+        set => _stop = value;
     }
 
-    [field: SerializeField]
-    public UnityEvent<Vector2> OnDrive { get; set; }
+    private UnityEvent<Vector2> OnDrive { get; }= new UnityEvent<Vector2>();
 
     private void Start()
     {
-        if(path == null || path.Count == 0)
-        {
+        OnDrive.AddListener(GetComponent<CarController>().Move);
+        if (_path == null || _path.Count == 0)
             Stop = true;
-        }
         else
-        {
-            currentTargetPosition = path[index];
-        }
+            currentTargetPosition = _path[_index];
     }
 
-    public void SetPath(List<Vector3> path)
+    public void SetPath(List<Vector3> p)
     {
-        if(path.Count == 0)
+        if (p.Count == 0)
         {
             Destroy(gameObject);
             return;
         }
-        this.path = path;
-        index = 0;
-        currentTargetPosition = this.path[index];
+        
+        _path = p;
+        _index = 0;
+        currentTargetPosition = _path[_index];
 
-        Vector3 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
+        var relativePoint = transform.InverseTransformPoint(_path[_index + 1]);
 
-        float angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
-
+        var angle = Mathf.Atan2(relativePoint.x, relativePoint.z) * Mathf.Rad2Deg;
+        
         transform.rotation = Quaternion.Euler(0, angle, 0);
         Stop = false;
     }
@@ -79,14 +67,8 @@ public class CarAI : MonoBehaviour
 
     private void CheckForCollisions()
     {
-        if(Physics.Raycast(raycastStartingPoint.transform.position, transform.forward,collisionRaycastLength, 1 << gameObject.layer))
-        {
-            collisionStop = true;
-        }
-        else
-        {
-            collisionStop = false;
-        }
+        _collisionStop = Physics.Raycast(raycastStartingPoint.transform.position, transform.forward,
+            collisionRaycastLength, 1 << gameObject.layer);
     }
 
     private void Drive()
@@ -97,47 +79,41 @@ public class CarAI : MonoBehaviour
         }
         else
         {
-            Vector3 relativepoint = transform.InverseTransformPoint(currentTargetPosition);
-            float angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
+            var relativepoint = transform.InverseTransformPoint(currentTargetPosition);
+            var angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
             var rotateCar = 0;
-            if(angle > turningAngleOffset)
-            {
+            if (angle > turningAngleOffset)
                 rotateCar = 1;
-            }else if(angle < -turningAngleOffset)
-            {
-                rotateCar = -1;
-            }
+            else if (angle < -turningAngleOffset) rotateCar = -1;
+
             OnDrive?.Invoke(new Vector2(rotateCar, 1));
         }
     }
 
     private void CheckIfArrived()
     {
-        if(Stop == false)
+        if (Stop) return;
+        
+        var distanceToCheck = arriveDistance;
+        if (_index == _path.Count - 1) distanceToCheck = lastPointArriveDistance;
+
+        if (Vector3.Distance(currentTargetPosition, transform.position) < distanceToCheck)
         {
-            var distanceToCheck = arriveDistance;
-            if(index == path.Count - 1)
-            {
-                distanceToCheck = lastPointArriveDistance;
-            }
-            if(Vector3.Distance(currentTargetPosition,transform.position) < distanceToCheck)
-            {
-                SetNextTargetIndex();
-            }
+            SetNextTargetIndex();
         }
     }
 
     private void SetNextTargetIndex()
     {
-        index++;
-        if(index >= path.Count)
+        _index++;
+        if (_index >= _path.Count)
         {
             Stop = true;
             Destroy(gameObject);
         }
         else
         {
-            currentTargetPosition = path[index];
+            currentTargetPosition = _path[_index];
         }
     }
 }
