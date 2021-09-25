@@ -34,13 +34,9 @@ namespace SimpleCity.AI
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
             path.Reverse();
-
-            if (path.Count == 0 && path.Count>2) return;
-
             var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
-
             var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count-2]);
-
+            
             _carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
 
             if (!_carPath.Any()) return;
