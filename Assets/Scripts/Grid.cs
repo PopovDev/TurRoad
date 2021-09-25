@@ -1,41 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Point
-{
-    public int X { get; }
-    public int Y { get; }
-
-    public Point(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (!(obj is Point point)) return false;
-        return X == point.X && Y == point.Y;
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            var hash = 6949;
-            hash = hash * 7907 + X.GetHashCode();
-            hash = hash * 7907 + Y.GetHashCode();
-            return hash;
-        }
-    }
-
-    public override string ToString()
-    {
-        return "P(" + X + ", " + Y + ")";
-        
-    }
-}
-
 public enum CellType
 {
     Empty,
@@ -44,6 +9,7 @@ public enum CellType
     SpecialStructure,
     None
 }
+
 public class Grid
 {
     private readonly CellType[,] _grid;
@@ -97,11 +63,16 @@ public class Grid
         return cellType == CellType.Empty || cellType == CellType.Road;
     }
 
-    public Point GetRandomRoadPoint() => _roadList.Count == 0 ? null : _roadList[UnityEngine.Random.Range(0, _roadList.Count)];
+    public Point GetRandomRoadPoint() =>
+        _roadList.Count == 0 ? null : _roadList[UnityEngine.Random.Range(0, _roadList.Count)];
 
-    public Point GetRandomSpecialStructurePoint() => _specialStructure.Count == 0 ? null : _specialStructure[UnityEngine.Random.Range(0, _specialStructure.Count)];
+    public Point GetRandomSpecialStructurePoint() => _specialStructure.Count == 0
+        ? null
+        : _specialStructure[UnityEngine.Random.Range(0, _specialStructure.Count)];
 
-    public Point GetRandomHouseStructurePoint() => _houseStructure.Count == 0 ? null : _houseStructure[UnityEngine.Random.Range(0, _houseStructure.Count)];
+    public Point GetRandomHouseStructurePoint() => _houseStructure.Count == 0
+        ? null
+        : _houseStructure[UnityEngine.Random.Range(0, _houseStructure.Count)];
 
     public List<Point> GetAllHouses() => _houseStructure;
 
