@@ -11,8 +11,6 @@ public class InputManager : MonoBehaviour
     public Vector3 CameraMovementVector { get; private set; } = Vector3.zero;
 
     [SerializeField] private Camera mainCamera;
-
-
     private void Update()
     {
         CheckClickDownEvent();
