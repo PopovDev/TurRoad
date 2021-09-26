@@ -476,10 +476,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -678588488315902003, guid: 37638e7d6c56f174d9f40d66f86f8b71, type: 3}
+    - target: {fileID: -4683669308469848369, guid: 37638e7d6c56f174d9f40d66f86f8b71, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13974430c7380024faea52e810bfabb3, type: 2}
+    - target: {fileID: -1461304994638716399, guid: 37638e7d6c56f174d9f40d66f86f8b71, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 13974430c7380024faea52e810bfabb3, type: 2}
+    - target: {fileID: -678588488315902003, guid: 37638e7d6c56f174d9f40d66f86f8b71, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 44a70b564366e074f87f5c257ad80653, type: 2}
     - target: {fileID: 919132149155446097, guid: 37638e7d6c56f174d9f40d66f86f8b71, type: 3}
       propertyPath: m_Name
       value: turnroad

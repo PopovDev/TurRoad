@@ -228,11 +228,15 @@ PrefabInstance:
     - target: {fileID: -6021021219678124155, guid: cefe1c11eb87a554f97369d45729b790, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 13974430c7380024faea52e810bfabb3, type: 2}
+      objectReference: {fileID: 2100000, guid: 44a70b564366e074f87f5c257ad80653, type: 2}
     - target: {fileID: 919132149155446097, guid: cefe1c11eb87a554f97369d45729b790, type: 3}
       propertyPath: m_Name
       value: edgeroadT
       objectReference: {fileID: 0}
+    - target: {fileID: 1602810264448338975, guid: cefe1c11eb87a554f97369d45729b790, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 13974430c7380024faea52e810bfabb3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cefe1c11eb87a554f97369d45729b790, type: 3}
 --- !u!4 &9161236540926951443 stripped
