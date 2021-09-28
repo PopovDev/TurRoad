@@ -6,16 +6,17 @@ public class LightController : MonoBehaviour
 {
     [SerializeField] private TrafficGate p1;
     [SerializeField] private TrafficGate p2;
-    [SerializeField] public LightState state;
+    [SerializeField] private LightState state;
     [SerializeField] private List<TrafficLight> oneGroup;
     [SerializeField] private  List<TrafficLight> twoGroup;
-    public enum LightState
+
+    private enum LightState
     {
         N1,
         Yellow,
         N2
     }
-    private void Update()
+    private void FixedUpdate()
     {
 
         switch (state)
