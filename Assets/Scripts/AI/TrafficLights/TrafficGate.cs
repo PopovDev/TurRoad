@@ -1,5 +1,5 @@
 using UnityEngine;
-public class LightControl : MonoBehaviour
+public class TrafficGate : MonoBehaviour
 {
     public bool canRun;
     private SmartRoad _road;

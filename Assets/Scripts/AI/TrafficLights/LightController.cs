@@ -1,10 +1,18 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
-public class Light : MonoBehaviour
+public class LightController : MonoBehaviour
 {
-    [SerializeField] private LightControl p1;
-    [SerializeField] private LightControl p2;
+    [SerializeField] private TrafficGate p1;
+    [SerializeField] private TrafficGate p2;
+    
     [SerializeField] public LightState state;
+    
+    [SerializeField] private TrafficLight one;
+    [SerializeField] private TrafficLight two;
+    [SerializeField] private TrafficLight three;
+    [SerializeField] [CanBeNull] private TrafficLight four;
+
     public enum LightState
     {
         N1,
@@ -13,6 +21,8 @@ public class Light : MonoBehaviour
         Red
     }
 
+    
+    
     private void Update()
     {
 

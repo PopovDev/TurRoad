@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SVS;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+[ExecuteInEditMode]
 public class TrafficLight : MonoBehaviour
 {
     [SerializeField] private Material red;
@@ -13,11 +14,16 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] private GameObject lightsPart;
     [SerializeField] private Transform normal;
     [SerializeField] private Transform up;
-    [SerializeField] private bool isUp;
-
-    private void Update()
+    private CameraMovement _cam;
+    private void Start()
     {
-        if (isUp)
+        _cam = FindObjectOfType<CameraMovement>();
+        _cam.CamModeChanged+= CamOnCamModeChanged;
+    }
+
+    private void CamOnCamModeChanged(bool camUp)
+    {
+        if (camUp)
         {
             lightsPart.transform.position = up.position;
             lightsPart.transform.rotation = up.rotation;
@@ -27,6 +33,6 @@ public class TrafficLight : MonoBehaviour
             lightsPart.transform.position = normal.position;
             lightsPart.transform.rotation = normal.rotation;
         }
-     
     }
+
 }
