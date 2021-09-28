@@ -992,6 +992,9 @@ MonoBehaviour:
   yellow: {fileID: 2100000, guid: 21606bf8a6579cb4da412a465f06dd08, type: 2}
   green: {fileID: 2100000, guid: 4157fd4bc4cdc564ea8bb40adffa8533, type: 2}
   gray: {fileID: 2100000, guid: 797b90cf56db305478ac8c38b9414604, type: 2}
+  redLight: {fileID: 4848561335038854747}
+  yellowLight: {fileID: 8936221131393636193}
+  greenLight: {fileID: 369591417112374}
   lightsPart: {fileID: 8317778672514748161}
   normal: {fileID: 9035919280358063565}
   up: {fileID: 9098476532868469218}
