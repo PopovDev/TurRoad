@@ -7,17 +7,18 @@ using UnityEngine.Serialization;
 
 public class TrafficLight : MonoBehaviour
 {
+    [Space]
     [SerializeField] private Material red;
     [SerializeField] private Material yellow;
     [SerializeField] private Material green;
     [SerializeField] private Material gray;
-
+    [Space]
     [SerializeField] private MeshRenderer redLight;
     [SerializeField] private MeshRenderer yellowLight;
     [SerializeField] private MeshRenderer greenLight;
-
-
+    [Space]
     [SerializeField] private GameObject lightsPart;
+    [Space]
     [SerializeField] private Transform normal;
     [SerializeField] private Transform up;
     private CameraMovement _cam;

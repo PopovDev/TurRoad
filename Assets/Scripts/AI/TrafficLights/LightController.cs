@@ -6,7 +6,9 @@ public class LightController : MonoBehaviour
 {
     [SerializeField] private TrafficGate p1;
     [SerializeField] private TrafficGate p2;
+    [Space]
     [SerializeField] private LightState state;
+    [Space]
     [SerializeField] private List<TrafficLight> oneGroup;
     [SerializeField] private  List<TrafficLight> twoGroup;
 
@@ -18,7 +20,6 @@ public class LightController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
         switch (state)
         {
             case LightState.N1:
@@ -32,7 +33,6 @@ public class LightController : MonoBehaviour
                 p2.canRun = true;
                 oneGroup.ForEach(x=>x.SetColor(false, false,true));
                 twoGroup.ForEach(x=>x.SetColor(true, false,false));
-
                 break;
             case LightState.Yellow:
                 oneGroup.ForEach(x=>x.SetColor(false, true,false));

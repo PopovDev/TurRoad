@@ -9,7 +9,6 @@ public class SmartRoad : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        
         if (!other.CompareTag($"Car")) return;
         var car = other.GetComponent<CarAI>();
         if (car == null || car == currentCar || car.IsThisLastPathIndex()) return;
@@ -22,6 +21,13 @@ public class SmartRoad : MonoBehaviour
         var car = other.GetComponent<CarAI>();
         if (car == null) return;
         if(car == currentCar) currentCar = null;
+    }
+    private void Update()
+    {
+        if (currentCar != null) return;
+        if (_trafficQueue.Count <= 0) return;
+        currentCar = _trafficQueue.Dequeue();
+        currentCar.Stop = false;
     }
 
 }
