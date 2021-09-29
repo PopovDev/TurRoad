@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public event Action<Ray> OnMouseClick, OnMouseHold;
-    public event Action OnMouseUp, OnEscape;
+    public event Action<Ray> OnMouseClick;
+    public event Action OnMouseUp, OnEscape, OnE, OnQ;
     public Vector3 CameraMovementVector { get; private set; } = Vector3.zero;
 
     [SerializeField] private Camera mainCamera;
@@ -18,8 +18,13 @@ public class InputManager : MonoBehaviour
         CheckClickUpEvent();
         CheckArrowInput();
         CheckEscClick();
+        CheckClicks();
     }
-
+    private void CheckClicks()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) OnE?.Invoke();
+        if (Input.GetKeyDown(KeyCode.Q)) OnQ?.Invoke();
+    }
     private void CheckClickHoldEvent()
     {
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
@@ -47,8 +52,8 @@ public class InputManager : MonoBehaviour
     public void ClearEvents()
     {
         OnMouseClick = null;
-        OnMouseHold = null;
         OnEscape = null;
         OnMouseUp = null;
+        OnE = null;
     }
 }
