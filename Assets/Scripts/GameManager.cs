@@ -1,5 +1,4 @@
 ﻿using SimpleCity.AI;
-using SVS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,19 +11,33 @@ public class GameManager : MonoBehaviour
     public InputManager inputManager;
     public UIController uiController;
     public StructureManager structureManager;
-
+    [Range(0.1f,20)]
+    public float sceneSpeed;
+    
     private void Start()
     {
-        uiController.OnRoadPlacement += RoadPlacementHandler;
-        uiController.OnHousePlacement += HousePlacementHandler;
-        uiController.OnSpecialPlacement += SpecialPlacementHandler;
+        BindMenuKeys();
+
+        
+    }
+    private void FixedUpdate()
+    {
+        Time.timeScale = sceneSpeed;
+        Debug.Log(inputManager.CameraMovementVector);
+    }
+    private void BindMenuKeys()
+    {
+        inputManager.OnE += RoadPlacementHandler;
+        inputManager.OnQ += HousePlacementHandler;
         inputManager.OnEscape += HandleEscape;
     }
+    
+
 
     private void HandleEscape()
     {
         ClearInputActions();
-        uiController.ResetButtonColor();
+        BindMenuKeys();
     }
 
 
@@ -47,7 +60,6 @@ public class GameManager : MonoBehaviour
         ClearInputActions();
         inputManager.OnMouseClick += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
-        inputManager.OnMouseHold += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
         inputManager.OnEscape += HandleEscape;
     }
 
@@ -68,5 +80,5 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Update() => cameraMovement.MoveCamera(inputManager.CameraMovementVector);
+    private void Update() => cameraMovement.MoveCamera(inputManager.CameraMovementVector,sceneSpeed);
 }
