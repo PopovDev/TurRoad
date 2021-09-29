@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         inputManager.OnE += RoadPlacementHandler;
         inputManager.OnQ += HousePlacementHandler;
+        inputManager.OnR += SpecialPlacementHandler;
         inputManager.OnEscape += HandleEscape;
     }
     
