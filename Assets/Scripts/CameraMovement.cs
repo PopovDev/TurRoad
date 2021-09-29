@@ -4,7 +4,6 @@ using UnityEngine.Serialization;
 
 namespace SVS
 {
-    [ExecuteInEditMode]
     public class CameraMovement : MonoBehaviour
     {
         private Camera _gameCamera;

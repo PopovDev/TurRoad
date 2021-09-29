@@ -243,10 +243,12 @@ MonoBehaviour:
   p1: {fileID: 3260801693883678542}
   p2: {fileID: 2580978606830280617}
   state: 0
-  one: {fileID: 6575975140097638418}
-  two: {fileID: 971707005002909630}
-  three: {fileID: 6421635711734934862}
-  four: {fileID: 1934455869007903731}
+  oneGroup:
+  - {fileID: 6421635711734934862}
+  - {fileID: 1934455869007903731}
+  twoGroup:
+  - {fileID: 6575975140097638418}
+  - {fileID: 971707005002909630}
 --- !u!1 &3351635067702010651
 GameObject:
   m_ObjectHideFlags: 0
