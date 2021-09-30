@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     public event Action<Ray> OnMouseClick;
-    public event Action OnMouseUp, OnEscape, OnE, OnQ, OnR;
+    public event Action OnMouseUp, OnEscape;
     public Vector3 CameraMovementVector { get; private set; } = Vector3.zero;
 
     [SerializeField] private Camera mainCamera;
@@ -22,9 +22,9 @@ public class InputManager : MonoBehaviour
     }
     private void CheckClicks()
     {
-        if (Input.GetKeyDown(KeyCode.E)) OnE?.Invoke();
-        if (Input.GetKeyDown(KeyCode.Q)) OnQ?.Invoke();
-        if (Input.GetKeyDown(KeyCode.R)) OnR?.Invoke();
+       // if (Input.GetKeyDown(KeyCode.E)) OnE?.Invoke();
+       // if (Input.GetKeyDown(KeyCode.Q)) OnQ?.Invoke();
+       // if (Input.GetKeyDown(KeyCode.R)) OnR?.Invoke();
     }
     private void CheckClickHoldEvent()
     {
@@ -55,6 +55,5 @@ public class InputManager : MonoBehaviour
         OnMouseClick = null;
         OnEscape = null;
         OnMouseUp = null;
-        OnE = null;
     }
 }
