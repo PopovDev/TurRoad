@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-
 public class CameraMovement : MonoBehaviour
 {
     private Camera _gameCamera;
@@ -9,9 +7,9 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private bool camUp = true;
     public event Action<bool> CamModeChanged;
     private void Start() => _gameCamera = GetComponent<Camera>();
-
-    public void MoveCamera(Vector3 inputVector, float sceneSpeed)
+    public void MoveCamera(float sceneSpeed)
     {
+        var inputVector = new Vector3(Input.GetAxis("Horizontal"),0, Input.GetAxis("Vertical"));
         var movementVector = Quaternion.Euler(0, 30, 0) * inputVector;
         _gameCamera.transform.position += movementVector * speed * Time.deltaTime / sceneSpeed;
     }

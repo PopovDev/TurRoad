@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -28,15 +26,13 @@ public class Editor : MonoBehaviour
         inputManager.OnMouseClick += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
-
     [UsedImplicitly]
     public void ClearInputActions() => inputManager.ClearEvents();
-
     private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
         var result = RaycastGround(ray);
-        if (result.HasValue)
-            callback.Invoke(result.Value);
+        if (!result.HasValue) return;
+        callback.Invoke(result.Value);
     }
 
     private static Vector3Int? RaycastGround(Ray ray)
