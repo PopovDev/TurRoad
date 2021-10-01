@@ -4,18 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlacementManager : MonoBehaviour
+public class PlacementManager : MonoBehaviour 
 {
     [SerializeField]
     private int width, height;
     private Grid _placementGrid;
-    
-    private readonly Dictionary<Vector3Int, StructureModel> _temporaryRoadObjects =
-        new Dictionary<Vector3Int, StructureModel>();
-    private readonly Dictionary<Vector3Int, StructureModel> _structureDictionary =
-        new Dictionary<Vector3Int, StructureModel>();
+    private readonly Dictionary<Vector3Int, StructureModel> _temporaryRoadObjects = new Dictionary<Vector3Int, StructureModel>();
+    private readonly Dictionary<Vector3Int, StructureModel> _structureDictionary = new Dictionary<Vector3Int, StructureModel>();
     private void Start() => _placementGrid = new Grid(width, height);
-
     internal CellType[] GetNeighbourTypesFor(Vector3Int position) => _placementGrid.GetAllAdjacentCellTypes(position.x, position.z);
 
     internal bool CheckIfPositionInBound(Vector3Int position) => position.x >= 0 && position.x < width && position.z >= 0 && position.z < height;
@@ -42,9 +38,8 @@ public class PlacementManager : MonoBehaviour
         return null;
     }
     
-    public bool CheckIfPositionIsFree(Vector3Int position) => CheckIfPositionIsOfType(position, CellType.Empty);
-
-    private bool CheckIfPositionIsOfType(Vector3Int position, CellType type) => _placementGrid[position.x, position.z] == type;
+    public bool IsPositionFree(Vector3Int position) => TypeOfPosition(position)==CellType.Empty;
+    private CellType TypeOfPosition(Vector3Int position) => _placementGrid[position.x, position.z];
 
     internal void PlaceTemporaryStructure(Vector3Int position, GameObject structurePrefab, CellType type)
     {
@@ -62,6 +57,7 @@ public class PlacementManager : MonoBehaviour
     private StructureModel CreateANewStructureModel(Vector3Int position, GameObject structurePrefab, CellType type)
     {
         var structure = new GameObject(type.ToString());
+        
         structure.transform.SetParent(transform);
         structure.transform.localPosition = position;
 

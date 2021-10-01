@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
-
 public class Editor : MonoBehaviour
 {
     public InputManager inputManager;

@@ -23,7 +23,7 @@ public class RoadManager : MonoBehaviour
     {
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        if (placementManager.CheckIfPositionIsFree(position) == false)
+        if (placementManager.IsPositionFree(position) == false)
             return;
         if (_placementMode == false)
         {
@@ -53,7 +53,7 @@ public class RoadManager : MonoBehaviour
 
             foreach (var temporaryPosition in temporaryPlacementPositions)
             {
-                if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
+                if (placementManager.IsPositionFree(temporaryPosition) == false)
                 {
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
