@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace SimpleCity.AI
+namespace AI.Types
 {
     public class Vertex : IEquatable<Vertex>
     {

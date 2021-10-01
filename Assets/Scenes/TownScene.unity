@@ -2893,6 +2893,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2039921796}
     m_Modifications:
     - target: {fileID: 6848475377550180592, guid: b51c1e6fa11ce5940b6220f44031e725, type: 3}
+      propertyPath: housePreview
+      value: 
+      objectReference: {fileID: 182799036}
+    - target: {fileID: 6848475377550180592, guid: b51c1e6fa11ce5940b6220f44031e725, type: 3}
       propertyPath: placementManager
       value: 
       objectReference: {fileID: 540532163}

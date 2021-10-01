@@ -1,20 +1,21 @@
-﻿using SimpleCity.AI;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadHelperMultipleCarMarkers : RoadHelper
+namespace AI
 {
-    [SerializeField]
-    protected List<Marker> incommingMarkers, outgoingMarkers;
-
-    public override Marker GetPositionForCarToSpawn(Vector3 nextPathPosition)
+    public class RoadHelperMultipleCarMarkers : RoadHelper
     {
-        return GetClosestMarkerTo(nextPathPosition, outgoingMarkers);
-    }
+        [SerializeField]
+        protected List<Marker> incommingMarkers, outgoingMarkers;
 
-    public override Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
-    {
-        return GetClosestMarkerTo(previousPathPosition, incommingMarkers);
+        public override Marker GetPositionForCarToSpawn(Vector3 nextPathPosition)
+        {
+            return GetClosestMarkerTo(nextPathPosition, outgoingMarkers);
+        }
+
+        public override Marker GetPositionForCarToEnd(Vector3 previousPathPosition)
+        {
+            return GetClosestMarkerTo(previousPathPosition, incommingMarkers);
+        }
     }
 }

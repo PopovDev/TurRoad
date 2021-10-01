@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace SimpleCity.AI
+namespace AI
 {
     public class RoadHelperStraight : RoadHelper
     {

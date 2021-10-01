@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace SimpleCity.AI
+namespace AI
 {
     public class RoadHelper : MonoBehaviour
     {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using AI.Types;
 using UnityEngine;
 
-namespace SimpleCity.AI
+namespace AI
 {
     public class AiDirector : MonoBehaviour
     {

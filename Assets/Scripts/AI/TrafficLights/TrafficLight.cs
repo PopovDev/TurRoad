@@ -1,53 +1,52 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class TrafficLight : MonoBehaviour
+namespace AI.TrafficLights
 {
-    [Space]
-    [SerializeField] private Material red;
-    [SerializeField] private Material yellow;
-    [SerializeField] private Material green;
-    [SerializeField] private Material gray;
-    [Space]
-    [SerializeField] private MeshRenderer redLight;
-    [SerializeField] private MeshRenderer yellowLight;
-    [SerializeField] private MeshRenderer greenLight;
-    [Space]
-    [SerializeField] private GameObject lightsPart;
-    [Space]
-    [SerializeField] private Transform normal;
-    [SerializeField] private Transform up;
-    private CameraMovement _cam;
-
-    private void Start()
+    public class TrafficLight : MonoBehaviour
     {
-        _cam = FindObjectOfType<CameraMovement>();
-        _cam.CamModeChanged += CamOnCamModeChanged;
-    }
+        [Space]
+        [SerializeField] private Material red;
+        [SerializeField] private Material yellow;
+        [SerializeField] private Material green;
+        [SerializeField] private Material gray;
+        [Space]
+        [SerializeField] private MeshRenderer redLight;
+        [SerializeField] private MeshRenderer yellowLight;
+        [SerializeField] private MeshRenderer greenLight;
+        [Space]
+        [SerializeField] private GameObject lightsPart;
+        [Space]
+        [SerializeField] private Transform normal;
+        [SerializeField] private Transform up;
+        private CameraMovement _cam;
 
-    public void SetColor(bool r, bool y, bool g)
-    {
-        redLight.material = r ? red : gray;
-        yellowLight.material = y ? yellow : gray;
-        greenLight.material = g ? green : gray;
-    }
-
-    private void OnDestroy() => _cam.CamModeChanged -= CamOnCamModeChanged;
-
-    private void CamOnCamModeChanged(bool camUp)
-    {
-        if (camUp)
+        private void Start()
         {
-            lightsPart.transform.position = up.position;
-            lightsPart.transform.rotation = up.rotation;
+            _cam = FindObjectOfType<CameraMovement>();
+            _cam.CamModeChanged += CamOnCamModeChanged;
         }
-        else
+
+        public void SetColor(bool r, bool y, bool g)
         {
-            lightsPart.transform.position = normal.position;
-            lightsPart.transform.rotation = normal.rotation;
+            redLight.material = r ? red : gray;
+            yellowLight.material = y ? yellow : gray;
+            greenLight.material = g ? green : gray;
+        }
+
+        private void OnDestroy() => _cam.CamModeChanged -= CamOnCamModeChanged;
+
+        private void CamOnCamModeChanged(bool camUp)
+        {
+            if (camUp)
+            {
+                lightsPart.transform.position = up.position;
+                lightsPart.transform.rotation = up.rotation;
+            }
+            else
+            {
+                lightsPart.transform.position = normal.position;
+                lightsPart.transform.rotation = normal.rotation;
+            }
         }
     }
 }

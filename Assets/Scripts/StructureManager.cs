@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class StructureManager : MonoBehaviour
@@ -13,6 +15,7 @@ public class StructureManager : MonoBehaviour
     public GameObject[] houses;
     [SerializeField]
     private GameObject house;
+    public RawImage housePreview;
     [SerializeField]
     private PlacementManager placementManager;
     public void SwapHouse()
@@ -21,7 +24,8 @@ public class StructureManager : MonoBehaviour
         var index = Array.IndexOf(houses, house)+1;
         if (index >= housesLength) index = 0;
         if (index < 0) index = housesLength - 1;
-        house = houses[index];
+        house = houses[index];  
+        housePreview.texture = AssetPreview.GetAssetPreview(house);
     }
 
     private void Start()

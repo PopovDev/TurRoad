@@ -1,5 +1,5 @@
-﻿using SimpleCity.AI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AI;
 using UnityEngine;
 
 public class StructureModel : MonoBehaviour, INeedingRoad
