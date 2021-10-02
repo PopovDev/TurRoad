@@ -20,7 +20,7 @@ public class StructureManager : MonoBehaviour
     private void Start()
     {
         _house = houses.FirstOrDefault();
-        _special = houses.FirstOrDefault();
+        _special = special.FirstOrDefault();
         UpdateIcon();
     }
 
@@ -69,15 +69,10 @@ public class StructureManager : MonoBehaviour
     public void PlaceSpecial(Vector3Int position)
     {
         if (!CheckPositionBeforePlacement(position)) return;
-        placementManager.PlaceObjectOnTheMap(position,
-            special[Random.Range(0, special.Length)],
-            CellType.SpecialStructure);
+        placementManager.PlaceObjectOnTheMap(position,_special, CellType.SpecialStructure);
     }
 
-    private bool CheckPositionBeforePlacement(Vector3Int position)
-    {
-        return DefaultCheck(position) && RoadCheck(position);
-    }
+    private bool CheckPositionBeforePlacement(Vector3Int position) => DefaultCheck(position) && RoadCheck(position);
 
     private bool RoadCheck(Vector3Int position)
     {
