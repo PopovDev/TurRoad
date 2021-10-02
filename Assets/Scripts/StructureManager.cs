@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -11,37 +10,54 @@ public class StructureManager : MonoBehaviour
     [SerializeField] private PlacementManager placementManager;
     [SerializeField] private GameObject[] special;
     [SerializeField] public GameObject[] houses;
-    private GameObject _house;
     public RawImage housePreview;
-   
+    public Text housePreviewText;
+    public RawImage specialPreview;
+    public Text specialPreviewText;
+    private GameObject _house;
+    private GameObject _special;
 
     private void Start()
     {
         _house = houses.FirstOrDefault();
+        _special = houses.FirstOrDefault();
         UpdateIcon();
     }
-    
+
     private void UpdateIcon()
     {
         var t = _house.GetComponent<PrefabInfo>();
+        var g = _special.GetComponent<PrefabInfo>();
         if (t != null)
         {
             housePreview.texture = t.icon;
+            housePreviewText.text = t.text;
         }
+
+        if (g == null) return;
+        specialPreview.texture = g.icon;
+        specialPreviewText.text = g.text;
     }
+
     [UsedImplicitly]
     public void SwapHouse()
     {
-
-        var housesLength = houses.Length;
         var index = Array.IndexOf(houses, _house) + 1;
-        if (index >= housesLength) index = 0;
-        if (index < 0) index = housesLength - 1;
+        if (index >= houses.Length) index = 0;
+        if (index < 0) index = houses.Length - 1;
         _house = houses[index];
         UpdateIcon();
-
     }
 
+    [UsedImplicitly]
+    public void SwapSpecial()
+    {
+        var index = Array.IndexOf(special, _special) + 1;
+        if (index >= special.Length) index = 0;
+        if (index < 0) index = special.Length - 1;
+        _special = special[index];
+        UpdateIcon();
+    }
 
     public void PlaceHouse(Vector3Int position)
     {
