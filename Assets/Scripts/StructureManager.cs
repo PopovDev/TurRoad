@@ -20,6 +20,7 @@ public class StructureManager : MonoBehaviour
     private bool _canPlace;
     private GameObject _house;
     private bool _placed;
+    private bool _canRemove;
     private GameObject _special;
 
     #endregion
@@ -72,23 +73,52 @@ public class StructureManager : MonoBehaviour
     #endregion
 
     #region Placer
-
     public void PlaceHouse(Vector3Int position)
     {
+        if (_canRemove)
+        {
+            placementManager.RemoveObject(position);
+            return;
+        }
+        
         if (_placed) return;
         if (_canPlace)
             placementManager.PlaceObjectOnTheMap(position, _house, CellType.Structure);
         _placed = true;
     }
 
-    public void PlaceHover(Vector3Int pos, GameObject mark)
+    public void PlaceHover(Vector3Int pos, GameObject green, GameObject red, bool isH)
     {
-        mark.SetActive(_canPlace = DefaultCheck(pos) && RoadCheck(pos));
-        if (_canPlace) mark.transform.position = pos;
+        _canRemove = false;
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            green.SetActive(false);
+            var f = placementManager.PlacementAGrid[pos.x, pos.z];
+            _canRemove = isH switch
+            {
+                true => f == CellType.SpecialStructure,
+                false => f == CellType.Structure
+            };
+            red.SetActive(_canRemove);
+            if (_canRemove) red.transform.position = pos;  
+        }
+        else
+        {
+            red.SetActive(false);
+            green.SetActive(_canPlace = DefaultCheck(pos) && RoadCheck(pos));
+            if (_canPlace) green.transform.position = pos;  
+        }
+        
+        
     }
 
     public void PlaceSpecial(Vector3Int position)
     {
+        if (_canRemove)
+        {
+            placementManager.RemoveObject(position);
+            return;
+        }
         if (_placed) return;
         if (_canPlace)
             placementManager.PlaceObjectOnTheMap(position, _special, CellType.SpecialStructure);

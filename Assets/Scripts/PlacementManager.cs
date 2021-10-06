@@ -28,6 +28,17 @@ public class PlacementManager : MonoBehaviour
     }
     private void Start() => PlacementAGrid = new AGrid(width, height);
 
+    public void RemoveObject(Vector3Int pos)
+    {
+        var gs = StructureDictionary[pos];
+        StructureDictionary.Remove(pos);
+        
+        PlacementAGrid[pos.x, pos.z] = CellType.Empty;
+        Destroy(gs.gameObject);
+        NearRoadRetest();
+    }
+
+
     private void NearRoadRetest()
     {
         foreach (var structure in StructureDictionary) structure.Value.RoadPosition = GetNearestRoads(structure.Key);
@@ -43,7 +54,7 @@ public class PlacementManager : MonoBehaviour
     {
         var structure = CreateANewStructureModel(position, structurePrefab, type);
         PlacementAGrid[position.x, position.z] = type;
-        StructureDictionary.Add(position, structure);
+        StructureDictionary[position]= structure;
         NearRoadRetest();
     }
     internal void PlaceObjectByIndex(Vector3Int position, int index, CellType cell) => PlaceObjectOnTheMap(position, _scObjs[index], cell);

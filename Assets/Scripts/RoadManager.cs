@@ -64,7 +64,7 @@ public class RoadManager : MonoBehaviour
         FixRoadPrefabs();
     }
 
-    public void FixRoadPrefabs()
+    private void FixRoadPrefabs()
     {
         foreach (var temporaryPosition in temporaryPlacementPositions)
         {

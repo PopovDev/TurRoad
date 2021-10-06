@@ -64,7 +64,6 @@ namespace System
                 path.Add(parent);
                 parent = parentMap[parent];
             }
-            Debug.Log(string.Join(" ",path));
             return path;
         }
     }

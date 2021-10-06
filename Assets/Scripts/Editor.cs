@@ -17,7 +17,7 @@ public class Editor : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceSpecial, pos);
-        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark), pos);
+        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark,redMark,true), pos);
         inputManager.OnMouseUp += structureManager.FinishPlace;
     }
 
@@ -26,7 +26,7 @@ public class Editor : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceHouse, pos);
-        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark), pos);
+        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark,redMark,false), pos);
         inputManager.OnMouseUp += structureManager.FinishPlace;
     }
 
