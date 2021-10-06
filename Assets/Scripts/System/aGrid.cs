@@ -65,6 +65,7 @@ namespace System
 
         private static bool IsCellWalkable(CellType cellType, bool aiAgent = false)
         {
+           // aiAgent = true;
             if (aiAgent)
                 return cellType == CellType.Road;
             return cellType == CellType.Empty || cellType == CellType.Road;
@@ -85,7 +86,7 @@ namespace System
 
         internal List<Point> GetAllSpecialStructure() => _specialStructure;
 
-        public List<Point> GetAdjacentCells(Point cell, bool isAgent)
+        public List<Point> GetAdjacentCells(Point cell, bool isAgent = false)
         {
             return GetWalkableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
         }
@@ -102,7 +103,7 @@ namespace System
             return adjacentCells;
         }
 
-        private List<Point> GetWalkableAdjacentCells(int x, int y, bool isAgent)
+        private List<Point> GetWalkableAdjacentCells(int x, int y, bool isAgent = false)
         {
             var adjacentCells = GetAllAdjacentCells(x, y);
             for (var i = adjacentCells.Count - 1; i >= 0; i--)

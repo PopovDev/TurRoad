@@ -35,7 +35,7 @@ namespace AI
 
         private List<Vector3> GetCarPath(Vector3Int start, Vector3Int end)
         {
-            var path = placementManager.GetPathBetween(start, end);
+            var path = placementManager.GetPathBetween(start, end, true);
             if (path.Count < 2) return new List<Vector3>();
             path.Reverse();
             var startMarker = placementManager.GetStructureAt(start).GetCarSpawnMarker(path[1]);
