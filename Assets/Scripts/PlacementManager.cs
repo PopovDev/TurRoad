@@ -1,76 +1,93 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AI.Types;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class PlacementManager : MonoBehaviour 
+public class PlacementManager : MonoBehaviour
 {
-    [SerializeField]
-    private int width, height;
-    private AGrid _placementAGrid;
-    private readonly Dictionary<Vector3Int, StructureModel> _temporaryRoadObjects = new Dictionary<Vector3Int, StructureModel>();
-    private readonly Dictionary<Vector3Int, StructureModel> _structureDictionary = new Dictionary<Vector3Int, StructureModel>();
-    private void Start() => _placementAGrid = new AGrid(width, height);
-    internal CellType[] GetNeighbourTypesFor(Vector3Int position) => _placementAGrid.GetAllAdjacentCellTypes(position.x, position.z);
+    [SerializeField] private int width, height;
+    internal AGrid PlacementAGrid;
 
-    internal bool CheckIfPositionInBound(Vector3Int position) => position.x >= 0 && position.x < width && position.z >= 0 && position.z < height;
+    private readonly Dictionary<Vector3Int, StructureModel> _temporaryRoadObjects =
+        new Dictionary<Vector3Int, StructureModel>();
+
+    internal readonly Dictionary<Vector3Int, StructureModel> StructureDictionary =
+        new Dictionary<Vector3Int, StructureModel>();
+
+    private List<GameObject> _scObjs;
+    public void SetObjs(IEnumerable<GameObject> a, IEnumerable<GameObject> b)
+    {
+        _scObjs = new List<GameObject>();
+        _scObjs.AddRange(a);
+        _scObjs.AddRange(b);
+    }
+    private void Start() => PlacementAGrid = new AGrid(width, height);
+
+    private void NearRoadRetest()
+    {
+        foreach (var structure in StructureDictionary) structure.Value.RoadPosition = GetNearestRoads(structure.Key);
+    }
+
+    internal CellType[] GetNeighbourTypesFor(Vector3Int position) =>
+        PlacementAGrid.GetAllAdjacentCellTypes(position.x, position.z);
+
+    internal bool CheckIfPositionInBound(Vector3Int position) =>
+        position.x >= 0 && position.x < width && position.z >= 0 && position.z < height;
 
     internal void PlaceObjectOnTheMap(Vector3Int position, GameObject structurePrefab, CellType type)
     {
         var structure = CreateANewStructureModel(position, structurePrefab, type);
-
-        var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
-        if (structureNeedingRoad != null)
-        {
-            structureNeedingRoad.RoadPosition = GetNearestRoad(position)?? new Vector3Int(0,0,0);
-            Debug.Log("My nearest road position is: " + structureNeedingRoad.RoadPosition);
-        }
-        _placementAGrid[position.x, position.z] = type;
-        _structureDictionary.Add(position, structure);
+        PlacementAGrid[position.x, position.z] = type;
+        StructureDictionary.Add(position, structure);
+        NearRoadRetest();
     }
+    internal void PlaceObjectByIndex(Vector3Int position, int index, CellType cell) => PlaceObjectOnTheMap(position, _scObjs[index], cell);
 
-    private Vector3Int? GetNearestRoad(Vector3Int position)
+    private IReadOnlyList<Vector3Int> GetNearestRoads(Vector3Int position)
     {
-        var roads = GetNeighboursOfTypeFor(position, CellType.Road);
-        if (roads.Count > 0) return roads[0];
-
-        return null;
+        return GetNeighboursOfTypeFor(position, CellType.Road);
     }
-    
-    public bool IsPositionFree(Vector3Int position) => TypeOfPosition(position)==CellType.Empty;
-    private CellType TypeOfPosition(Vector3Int position) => _placementAGrid[position.x, position.z];
+
+    public bool IsPositionFree(Vector3Int position) => TypeOfPosition(position) == CellType.Empty;
+    private CellType TypeOfPosition(Vector3Int position) => PlacementAGrid[position.x, position.z];
 
     internal void PlaceTemporaryStructure(Vector3Int position, GameObject structurePrefab, CellType type)
     {
-        _placementAGrid[position.x, position.z] = type;
+        PlacementAGrid[position.x, position.z] = type;
         var structure = CreateANewStructureModel(position, structurePrefab, type);
         _temporaryRoadObjects.Add(position, structure);
+        NearRoadRetest();
     }
 
     internal List<Vector3Int> GetNeighboursOfTypeFor(Vector3Int position, CellType type)
     {
-        var neighbourVertices = _placementAGrid.GetAdjacentCellsOfType(position.x, position.z, type);
+        var neighbourVertices = PlacementAGrid.GetAdjacentCellsOfType(position.x, position.z, type);
         return neighbourVertices.Select(point => new Vector3Int(point.X, 0, point.Y)).ToList();
     }
 
     private StructureModel CreateANewStructureModel(Vector3Int position, GameObject structurePrefab, CellType type)
     {
         var structure = new GameObject(type.ToString());
-        
+
         structure.transform.SetParent(transform);
         structure.transform.localPosition = position;
 
         var structureModel = structure.AddComponent<StructureModel>();
-        structureModel.CreateModel(structurePrefab);
+        var i = Array.IndexOf(_scObjs.ToArray(), structurePrefab);
+        structureModel.CreateModel(structurePrefab, i);
         return structureModel;
     }
 
     internal List<Vector3Int> GetPathBetween(Vector3Int startPosition, Vector3Int endPosition, bool isAgent = false)
     {
-        var resultPath = GridSearch.AStarSearch(_placementAGrid, new Point(startPosition.x, startPosition.z),
+        var resultPath = GridSearch.AStarSearch(PlacementAGrid, new Point(startPosition.x, startPosition.z),
             new Point(endPosition.x, endPosition.z), isAgent);
+        
         return resultPath.Select(point => new Vector3Int(point.X, 0, point.Y)).ToList();
     }
 
@@ -79,9 +96,10 @@ public class PlacementManager : MonoBehaviour
         foreach (var structure in _temporaryRoadObjects.Values)
         {
             var position = Vector3Int.RoundToInt(structure.transform.position);
-            _placementAGrid[position.x, position.z] = CellType.Empty;
+            PlacementAGrid[position.x, position.z] = CellType.Empty;
             Destroy(structure.gameObject);
         }
+
         _temporaryRoadObjects.Clear();
     }
 
@@ -89,7 +107,7 @@ public class PlacementManager : MonoBehaviour
     {
         foreach (var structure in _temporaryRoadObjects)
         {
-            _structureDictionary.Add(structure.Key, structure.Value);
+            StructureDictionary.Add(structure.Key, structure.Value);
         }
 
         _temporaryRoadObjects.Clear();
@@ -99,26 +117,28 @@ public class PlacementManager : MonoBehaviour
     {
         if (_temporaryRoadObjects.ContainsKey(position))
             _temporaryRoadObjects[position].SwapModel(newModel, rotation);
-        else if (_structureDictionary.ContainsKey(position))
-            _structureDictionary[position].SwapModel(newModel, rotation);
+        else if (StructureDictionary.ContainsKey(position))
+            StructureDictionary[position].SwapModel(newModel, rotation);
     }
 
-    public StructureModel GetRandomRoad() => GetStructureAt(_placementAGrid.GetRandomRoadPoint());
+    public StructureModel GetRandomRoad() => GetStructureAt(PlacementAGrid.GetRandomRoadPoint());
 
-    public StructureModel GetRandomSpecialStructure() => GetStructureAt(_placementAGrid.GetRandomSpecialStructurePoint());
+    public StructureModel GetRandomSpecialStructure() =>
+        GetStructureAt(PlacementAGrid.GetRandomSpecialStructurePoint());
 
-    public StructureModel GetRandomHouseStructure() => GetStructureAt(_placementAGrid.GetRandomHouseStructurePoint());
+    public StructureModel GetRandomHouseStructure() => GetStructureAt(PlacementAGrid.GetRandomHouseStructurePoint());
 
-    public List<StructureModel> GetAllHouses() => _placementAGrid.GetAllHouses().Select(point => _structureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
+    public List<StructureModel> GetAllHouses() => PlacementAGrid.GetAllHouses()
+        .Select(point => StructureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
 
     internal List<StructureModel> GetAllSpecialStructures() =>
-        _placementAGrid.GetAllSpecialStructure()
-            .Select(point => _structureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
+        PlacementAGrid.GetAllSpecialStructure()
+            .Select(point => StructureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
 
 
     private StructureModel GetStructureAt(Point point) =>
-        point != null ? _structureDictionary[new Vector3Int(point.X, 0, point.Y)] : null;
+        point != null ? StructureDictionary[new Vector3Int(point.X, 0, point.Y)] : null;
 
-    public StructureModel GetStructureAt(Vector3Int position) => 
-        _structureDictionary.ContainsKey(position) ? _structureDictionary[position] : null;
+    public StructureModel GetStructureAt(Vector3Int position) =>
+        StructureDictionary.ContainsKey(position) ? StructureDictionary[position] : null;
 }

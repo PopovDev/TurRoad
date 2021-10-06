@@ -4,18 +4,19 @@ using UnityEngine;
 
 namespace System
 {
-    public class StructureModel : MonoBehaviour, INeedingRoad
+    public class StructureModel : MonoBehaviour
     {
         private float _yHeight;
+        public int ObjIndex { get; private set; }
 
-        public Vector3Int RoadPosition { get; set; }
+        public IReadOnlyList<Vector3Int> RoadPosition { get; set; }
 
-        public void CreateModel(GameObject model)
+        public void CreateModel(GameObject obj, int i= -1)
         {
-            var structure = Instantiate(model, transform);
+            ObjIndex = i;
+            var structure = Instantiate(obj, transform);
             _yHeight = structure.transform.position.y;
         }
-
         public void SwapModel(GameObject model, Quaternion rotation)
         {
             foreach (Transform child in transform) Destroy(child.gameObject);
@@ -44,5 +45,7 @@ namespace System
         {
             return transform.GetChild(0).GetComponent<RoadHelper>().GetPositionForCarToEnd(previousPathPosition);
         }
+
+
     }
 }

@@ -3,26 +3,36 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class StructureManager : MonoBehaviour
 {
     [SerializeField] private PlacementManager placementManager;
-    [SerializeField] private GameObject[] special;
+    [SerializeField] public GameObject[] special;
     [SerializeField] public GameObject[] houses;
+
+
+    #region Vars
+
     public RawImage housePreview;
     public Text housePreviewText;
     public RawImage specialPreview;
     public Text specialPreviewText;
+    private bool _canPlace;
     private GameObject _house;
+    private bool _placed;
     private GameObject _special;
+
+    #endregion
 
     private void Start()
     {
         _house = houses.FirstOrDefault();
         _special = special.FirstOrDefault();
+        placementManager.SetObjs(special, houses);
         UpdateIcon();
     }
+
+    #region ForUi
 
     private void UpdateIcon()
     {
@@ -59,20 +69,31 @@ public class StructureManager : MonoBehaviour
         UpdateIcon();
     }
 
+    #endregion
+
+    #region Placer
+
     public void PlaceHouse(Vector3Int position)
     {
-        if (!CheckPositionBeforePlacement(position)) return;
+        if (_placed) return;
+        if (_canPlace)
+            placementManager.PlaceObjectOnTheMap(position, _house, CellType.Structure);
+        _placed = true;
+    }
 
-        placementManager.PlaceObjectOnTheMap(position, _house, CellType.Structure);
+    public void PlaceHover(Vector3Int pos, GameObject mark)
+    {
+        mark.SetActive(_canPlace = DefaultCheck(pos) && RoadCheck(pos));
+        if (_canPlace) mark.transform.position = pos;
     }
 
     public void PlaceSpecial(Vector3Int position)
     {
-        if (!CheckPositionBeforePlacement(position)) return;
-        placementManager.PlaceObjectOnTheMap(position,_special, CellType.SpecialStructure);
+        if (_placed) return;
+        if (_canPlace)
+            placementManager.PlaceObjectOnTheMap(position, _special, CellType.SpecialStructure);
+        _placed = true;
     }
-
-    private bool CheckPositionBeforePlacement(Vector3Int position) => DefaultCheck(position) && RoadCheck(position);
 
     private bool RoadCheck(Vector3Int position)
     {
@@ -83,4 +104,8 @@ public class StructureManager : MonoBehaviour
     {
         return placementManager.CheckIfPositionInBound(position) && placementManager.IsPositionFree(position);
     }
+
+    public void FinishPlace() => _placed = false;
+
+    #endregion
 }

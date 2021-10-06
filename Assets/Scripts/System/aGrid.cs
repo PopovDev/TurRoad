@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using AI.Types;
 
 namespace System
@@ -12,14 +13,18 @@ namespace System
         None
     }
 
+    [Serializable]
+    [DataContract]
     public class AGrid
     {
         private readonly CellType[,] _grid;
         private int Width { get; }
         private int Height { get; }
-
+        [DataMember]
         private readonly List<Point> _roadList = new List<Point>();
+        [DataMember]
         private readonly List<Point> _specialStructure = new List<Point>();
+        [DataMember]
         private readonly List<Point> _houseStructure = new List<Point>();
 
         public AGrid(int width, int height)
@@ -60,6 +65,7 @@ namespace System
 
         private static bool IsCellWalkable(CellType cellType, bool aiAgent = false)
         {
+           // aiAgent = true;
             if (aiAgent)
                 return cellType == CellType.Road;
             return cellType == CellType.Empty || cellType == CellType.Road;
@@ -80,7 +86,7 @@ namespace System
 
         internal List<Point> GetAllSpecialStructure() => _specialStructure;
 
-        public List<Point> GetAdjacentCells(Point cell, bool isAgent)
+        public List<Point> GetAdjacentCells(Point cell, bool isAgent = false)
         {
             return GetWalkableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
         }
@@ -97,7 +103,7 @@ namespace System
             return adjacentCells;
         }
 
-        private List<Point> GetWalkableAdjacentCells(int x, int y, bool isAgent)
+        private List<Point> GetWalkableAdjacentCells(int x, int y, bool isAgent = false)
         {
             var adjacentCells = GetAllAdjacentCells(x, y);
             for (var i = adjacentCells.Count - 1; i >= 0; i--)
