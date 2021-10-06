@@ -14,16 +14,19 @@ public class InputManager : MonoBehaviour
         CheckClickDownEvent();
         CheckClickHoldEvent();
         CheckClickUpEvent();
+        CheckHoverEvent();
     }
     private void CheckClickHoldEvent()
     {
         if (EventSystem.current.IsPointerOverGameObject() == false)
             OnMouseHover?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+    }
+    private void CheckHoverEvent()
+    {
         
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
             OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
     }
-
     private void CheckClickUpEvent()
     {
         if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) OnMouseUp?.Invoke();
