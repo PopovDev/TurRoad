@@ -2,7 +2,6 @@ using System;
 using AI;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Editor : MonoBehaviour
 {

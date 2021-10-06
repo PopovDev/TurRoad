@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using AI.Types;
 
 namespace System
@@ -13,14 +14,17 @@ namespace System
     }
 
     [Serializable]
+    [DataContract]
     public class AGrid
     {
         private readonly CellType[,] _grid;
         private int Width { get; }
         private int Height { get; }
-
+        [DataMember]
         private readonly List<Point> _roadList = new List<Point>();
+        [DataMember]
         private readonly List<Point> _specialStructure = new List<Point>();
+        [DataMember]
         private readonly List<Point> _houseStructure = new List<Point>();
 
         public AGrid(int width, int height)

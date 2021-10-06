@@ -26,7 +26,7 @@ namespace AI
 
         public void MarkHover(Vector3Int position, GameObject mark)
         {
-            var g = placementManager.GetAllHouses().Any(x => x.RoadPosition.Contains(position));
+            var g = placementManager.GetAllHouses().Any(x => (x.RoadPosition?? new List<Vector3Int>()).Contains(position));
             mark.SetActive(_canPutCar = g);
             if (g) mark.transform.position = position;
         }

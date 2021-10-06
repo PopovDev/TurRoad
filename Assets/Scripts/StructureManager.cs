@@ -7,8 +7,12 @@ using UnityEngine.UI;
 public class StructureManager : MonoBehaviour
 {
     [SerializeField] private PlacementManager placementManager;
-    [SerializeField] private GameObject[] special;
+    [SerializeField] public GameObject[] special;
     [SerializeField] public GameObject[] houses;
+
+
+    #region Vars
+
     public RawImage housePreview;
     public Text housePreviewText;
     public RawImage specialPreview;
@@ -18,12 +22,18 @@ public class StructureManager : MonoBehaviour
     private bool _placed;
     private GameObject _special;
 
+    #endregion
+
     private void Start()
     {
         _house = houses.FirstOrDefault();
         _special = special.FirstOrDefault();
+        placementManager.SetObjs(special, houses);
         UpdateIcon();
     }
+
+    #region ForUi
+
     private void UpdateIcon()
     {
         var t = _house.GetComponent<PrefabInfo>();
@@ -59,6 +69,10 @@ public class StructureManager : MonoBehaviour
         UpdateIcon();
     }
 
+    #endregion
+
+    #region Placer
+
     public void PlaceHouse(Vector3Int position)
     {
         if (_placed) return;
@@ -92,4 +106,6 @@ public class StructureManager : MonoBehaviour
     }
 
     public void FinishPlace() => _placed = false;
+
+    #endregion
 }

@@ -9,15 +9,13 @@ public class RoadManager : MonoBehaviour
 
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
     public List<Vector3Int> roadPositionsToRecheck = new List<Vector3Int>();
-
     private Vector3Int _startPosition;
     private bool _placementMode;
-
-    public RoadFixer roadFixer;
-
+    private RoadFixer _roadFixer;
     private void Start()
     {
-        roadFixer = GetComponent<RoadFixer>();
+        placementManager.roadManager = this;
+        placementManager.roadFixer =_roadFixer=  GetComponent<RoadFixer>();;
     }
 
     public void PlaceRoad(Vector3Int position)
@@ -35,7 +33,7 @@ public class RoadManager : MonoBehaviour
             _startPosition = position;
 
             temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
+            placementManager.PlaceTemporaryStructure(position, _roadFixer.deadEnd, CellType.Road);
 
         }
         else
@@ -45,7 +43,7 @@ public class RoadManager : MonoBehaviour
 
             foreach (var positionsToFix in roadPositionsToRecheck)
             {
-                roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+                _roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
             }
 
             roadPositionsToRecheck.Clear();
@@ -59,7 +57,7 @@ public class RoadManager : MonoBehaviour
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
                 }  
-                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road);
+                placementManager.PlaceTemporaryStructure(temporaryPosition, _roadFixer.deadEnd, CellType.Road);
             }
         }
 
@@ -67,11 +65,11 @@ public class RoadManager : MonoBehaviour
 
     }
 
-    private void FixRoadPrefabs()
+    public void FixRoadPrefabs()
     {
         foreach (var temporaryPosition in temporaryPlacementPositions)
         {
-            roadFixer.FixRoadAtPosition(placementManager, temporaryPosition);
+            _roadFixer.FixRoadAtPosition(placementManager, temporaryPosition);
             var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
             foreach (var roadPosition in neighbours.Where(x =>
                 roadPositionsToRecheck.Contains(x) == false))
@@ -81,7 +79,7 @@ public class RoadManager : MonoBehaviour
         }
         foreach (var positionToFix in roadPositionsToRecheck)
         {
-            roadFixer.FixRoadAtPosition(placementManager, positionToFix);
+            _roadFixer.FixRoadAtPosition(placementManager, positionToFix);
         }
     }
 
