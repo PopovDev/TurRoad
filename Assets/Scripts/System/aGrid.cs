@@ -59,7 +59,12 @@ namespace System
             }
         }
 
-        private static bool IsCellWalkable(CellType cellType) => cellType == CellType.Road;
+        private static bool IsCellWalkable(CellType cellType, bool aiAgent = false)
+        {
+            if (aiAgent)
+                return cellType == CellType.Road;
+            return cellType == CellType.Empty || cellType == CellType.Road;
+        }
 
         public Point GetRandomRoadPoint() =>
             _roadList.Count == 0 ? null : _roadList[UnityEngine.Random.Range(0, _roadList.Count)];
@@ -76,7 +81,10 @@ namespace System
 
         internal List<Point> GetAllSpecialStructure() => _specialStructure;
 
-        public List<Point> GetAdjacentCells(Point cell) => GetWalkableAdjacentCells(cell.X,cell.Y);
+        public List<Point> GetAdjacentCells(Point cell, bool isAgent)
+        {
+            return GetWalkableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
+        }
 
         public static float GetCostOfEnteringCell(Point cell) => 1;
 
@@ -90,11 +98,11 @@ namespace System
             return adjacentCells;
         }
 
-        private List<Point> GetWalkableAdjacentCells(int x, int y)
+        private List<Point> GetWalkableAdjacentCells(int x, int y, bool isAgent)
         {
             var adjacentCells = GetAllAdjacentCells(x, y);
             for (var i = adjacentCells.Count - 1; i >= 0; i--)
-                if (IsCellWalkable(_grid[adjacentCells[i].X, adjacentCells[i].Y]) == false)
+                if (IsCellWalkable(_grid[adjacentCells[i].X, adjacentCells[i].Y], isAgent) == false)
                     adjacentCells.RemoveAt(i);
             return adjacentCells;
         }
@@ -107,6 +115,13 @@ namespace System
                     adjacentCells.RemoveAt(i);
             return adjacentCells;
         }
+
+        /// <summary>
+        /// Returns array [Left neighbour, Top neighbour, Right neighbour, Down neighbour]
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public CellType[] GetAllAdjacentCellTypes(int x, int y)
         {
             CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
