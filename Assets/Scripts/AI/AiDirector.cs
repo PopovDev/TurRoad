@@ -16,34 +16,33 @@ namespace AI
         public void SpawnCar(Vector3Int position)
         {
             if (_cBlock) return;
-            if(!_canPutCar) return;
+            if (!_canPutCar) return;
             var iter = 0;
             while (!TrySpawnACar(position, placementManager.GetRandomSpecialStructure()))
                 if (iter++ > 100)
                     break;
             _cBlock = true;
         }
-        
-        public void MarkHover(Vector3Int position,GameObject mark)
+
+        public void MarkHover(Vector3Int position, GameObject mark)
         {
             var g = placementManager.GetAllHouses().Any(x => x.RoadPosition.Contains(position));
             mark.SetActive(_canPutCar = g);
-            if(g) mark.transform.position = position;
+            if (g) mark.transform.position = position;
         }
+
         public void FinishSpawnCar() => _cBlock = false;
 
-        private IEnumerable<Vector3> GetCarPath(Vector3Int start, Vector3Int end)
+        private List<Vector3> GetCarPath(Vector3Int start, Vector3Int end)
         {
             var path = placementManager.GetPathBetween(start, end);
-            if(path.Count<2) yield break;
+            if (path.Count < 2) return new List<Vector3>();
             Debug.Log(path.Count);
             path.Reverse();
             var startMarker = placementManager.GetStructureAt(start).GetCarSpawnMarker(path[1]);
             var endMarker = placementManager.GetStructureAt(end).GetCarEndMarker(path[path.Count - 2]);
-            
-            foreach (var v in GetCarPath(path, startMarker.Position, endMarker.Position))
-                yield return v;
-
+            var g = GetCarPath(path, startMarker.Position, endMarker.Position);
+            return g == null ? new List<Vector3>() : g.ToList();
         }
 
         private void SpawnCar(IEnumerable<Vector3> path, Vector3 pos)
@@ -58,18 +57,20 @@ namespace AI
             foreach (var g in endStructure.RoadPosition)
             {
                 var carPath = GetCarPath(startRoadPosition, g);
-                var enumerable = carPath.ToList();
-                if (!enumerable.Any()) continue;
-                SpawnCar(enumerable, startRoadPosition);
+                if (!carPath.Any()) continue;
+                SpawnCar(carPath, startRoadPosition);
                 return true;
             }
+
             return false;
         }
 
 
-        private List<Vector3> GetCarPath(IReadOnlyList<Vector3Int> path, Vector3 startPosition, Vector3 endPosition)
+        private IEnumerable<Vector3> GetCarPath(IReadOnlyList<Vector3Int> path, Vector3 startPosition,
+            Vector3 endPosition)
         {
             var carGraph = CreatACarGraph(path);
+            if (carGraph == null) return null;
             Debug.Log(carGraph);
             return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
         }
@@ -94,6 +95,7 @@ namespace AI
 
                     if (!marker.OpenForConnection || i + 1 >= path.Count) continue;
                     var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
+                    if (nextRoadPosition == null) return null;
                     if (limitDistance)
                         tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
                     else
