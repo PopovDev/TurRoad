@@ -20,6 +20,8 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector3Int position)
     {
+        
+        
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         if (placementManager.IsPositionFree(position) == false)

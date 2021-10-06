@@ -73,19 +73,7 @@ public class StructureManager : MonoBehaviour
     #endregion
 
     #region Placer
-    public void PlaceHouse(Vector3Int position)
-    {
-        if (_canRemove)
-        {
-            placementManager.RemoveObject(position);
-            return;
-        }
-        
-        if (_placed) return;
-        if (_canPlace)
-            placementManager.PlaceObjectOnTheMap(position, _house, CellType.Structure);
-        _placed = true;
-    }
+    public void PlaceHouse(Vector3Int position) => Place(position);
 
     public void PlaceHover(Vector3Int pos, GameObject green, GameObject red, bool isH)
     {
@@ -112,7 +100,7 @@ public class StructureManager : MonoBehaviour
         
     }
 
-    public void PlaceSpecial(Vector3Int position)
+    private void Place(Vector3Int position, bool isSp = false)
     {
         if (_canRemove)
         {
@@ -121,9 +109,16 @@ public class StructureManager : MonoBehaviour
         }
         if (_placed) return;
         if (_canPlace)
-            placementManager.PlaceObjectOnTheMap(position, _special, CellType.SpecialStructure);
+        {
+            if(isSp)
+                placementManager.PlaceObjectOnTheMap(position, _special, CellType.SpecialStructure);
+            else
+                placementManager.PlaceObjectOnTheMap(position, _house, CellType.Structure);
+        }
+          
         _placed = true;
     }
+    public void PlaceSpecial(Vector3Int position) => Place(position, true);
 
     private bool RoadCheck(Vector3Int position)
     {
