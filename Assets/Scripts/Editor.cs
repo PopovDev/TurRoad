@@ -10,6 +10,7 @@ public class Editor : MonoBehaviour
     public RoadManager roadManager;
     public AiDirector aiDirector;
     public GameObject greenMark;
+    public GameObject redMark;
 
     [UsedImplicitly]
     public void SpecialPlacementHandler()
