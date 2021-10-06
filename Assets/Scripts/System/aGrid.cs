@@ -12,6 +12,7 @@ namespace System
         None
     }
 
+    [Serializable]
     public class AGrid
     {
         private readonly CellType[,] _grid;

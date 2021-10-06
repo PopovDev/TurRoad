@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AI.Types;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class PlacementManager : MonoBehaviour 
@@ -13,6 +14,13 @@ public class PlacementManager : MonoBehaviour
     private readonly Dictionary<Vector3Int, StructureModel> _temporaryRoadObjects = new Dictionary<Vector3Int, StructureModel>();
     private readonly Dictionary<Vector3Int, StructureModel> _structureDictionary = new Dictionary<Vector3Int, StructureModel>();
     private void Start() => _placementAGrid = new AGrid(width, height);
+
+    private void Update()
+    {
+   //  _placementAGrid
+    }
+
+
     internal CellType[] GetNeighbourTypesFor(Vector3Int position) => _placementAGrid.GetAllAdjacentCellTypes(position.x, position.z);
 
     internal bool CheckIfPositionInBound(Vector3Int position) => position.x >= 0 && position.x < width && position.z >= 0 && position.z < height;
@@ -21,22 +29,23 @@ public class PlacementManager : MonoBehaviour
     {
         var structure = CreateANewStructureModel(position, structurePrefab, type);
 
-        var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
+        var structureNeedingRoad = structure.GetComponent<StructureModel>();
         if (structureNeedingRoad != null)
         {
-            structureNeedingRoad.RoadPosition = GetNearestRoad(position)?? new Vector3Int(0,0,0);
-            Debug.Log("My nearest road position is: " + structureNeedingRoad.RoadPosition);
+            structureNeedingRoad.RoadPosition = GetNearestRoads(position);
+            foreach (var g in structureNeedingRoad.RoadPosition)
+            {
+                Debug.Log("My nearest road position is: " + g); 
+            }
+            
         }
         _placementAGrid[position.x, position.z] = type;
         _structureDictionary.Add(position, structure);
     }
 
-    private Vector3Int? GetNearestRoad(Vector3Int position)
+    private IReadOnlyList<Vector3Int> GetNearestRoads(Vector3Int position)
     {
-        var roads = GetNeighboursOfTypeFor(position, CellType.Road);
-        if (roads.Count > 0) return roads[0];
-
-        return null;
+        return GetNeighboursOfTypeFor(position, CellType.Road);
     }
     
     public bool IsPositionFree(Vector3Int position) => TypeOfPosition(position)==CellType.Empty;

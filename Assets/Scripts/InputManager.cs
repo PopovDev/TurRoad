@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     public event Action<Ray> OnMouseClick;
+    public event Action<Ray> OnMouseHover;
     public event Action OnMouseUp;
 
     [SerializeField] private Camera mainCamera;
@@ -16,6 +17,9 @@ public class InputManager : MonoBehaviour
     }
     private void CheckClickHoldEvent()
     {
+        if (EventSystem.current.IsPointerOverGameObject() == false)
+            OnMouseHover?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+        
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
             OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
     }
@@ -34,5 +38,6 @@ public class InputManager : MonoBehaviour
     {
         OnMouseClick = null;
         OnMouseUp = null;
+        OnMouseHover = null;
     }
 }

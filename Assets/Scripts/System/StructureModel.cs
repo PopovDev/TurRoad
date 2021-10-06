@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace System
 {
-    public class StructureModel : MonoBehaviour, INeedingRoad
+    public class StructureModel : MonoBehaviour
     {
         private float _yHeight;
 
-        public Vector3Int RoadPosition { get; set; }
+        public IReadOnlyList<Vector3Int> RoadPosition { get; set; }
 
         public void CreateModel(GameObject model)
         {
