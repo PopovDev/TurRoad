@@ -76,10 +76,10 @@ public class PlacementManager : MonoBehaviour
         return structureModel;
     }
 
-    internal List<Vector3Int> GetPathBetween(Vector3Int startPosition, Vector3Int endPosition, bool isAgent = false)
+    internal List<Vector3Int> GetPathBetween(Vector3Int startPosition, Vector3Int endPosition)
     {
         var resultPath = GridSearch.AStarSearch(_placementAGrid, new Point(startPosition.x, startPosition.z),
-            new Point(endPosition.x, endPosition.z), isAgent);
+            new Point(endPosition.x, endPosition.z));
         return resultPath.Select(point => new Vector3Int(point.X, 0, point.Y)).ToList();
     }
 
@@ -118,7 +118,7 @@ public class PlacementManager : MonoBehaviour
 
     public StructureModel GetRandomHouseStructure() => GetStructureAt(_placementAGrid.GetRandomHouseStructurePoint());
 
-    public List<StructureModel> GetAllHouses() => _placementAGrid.GetAllHouses().Select(point => _structureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
+    public IEnumerable<StructureModel> GetAllHouses() => _placementAGrid.GetAllHouses().Select(point => _structureDictionary[new Vector3Int(point.X, 0, point.Y)]).ToList();
 
     internal List<StructureModel> GetAllSpecialStructures() =>
         _placementAGrid.GetAllSpecialStructure()

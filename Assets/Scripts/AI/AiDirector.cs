@@ -34,7 +34,7 @@ namespace AI
 
         private IEnumerable<Vector3> GetCarPath(Vector3Int start, Vector3Int end)
         {
-            var path = placementManager.GetPathBetween(start, end, true);
+            var path = placementManager.GetPathBetween(start, end);
             if(path.Count<2) yield break;
             Debug.Log(path.Count);
             path.Reverse();

@@ -30,7 +30,7 @@ namespace System
                     return path;
                 }
 
-                foreach (var neighbour in aGrid.GetAdjacentCells(current, isAgent))
+                foreach (var neighbour in aGrid.GetAdjacentCells(current))
                 {
                     var newCost = costDictionary[current] + AGrid.GetCostOfEnteringCell(neighbour);
                     if (costDictionary.ContainsKey(neighbour) && !(newCost < costDictionary[neighbour])) continue;
