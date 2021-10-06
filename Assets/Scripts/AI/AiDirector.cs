@@ -37,11 +37,11 @@ namespace AI
         {
             var path = placementManager.GetPathBetween(start, end);
             if (path.Count < 2) return new List<Vector3>();
-            Debug.Log(path.Count);
             path.Reverse();
             var startMarker = placementManager.GetStructureAt(start).GetCarSpawnMarker(path[1]);
             var endMarker = placementManager.GetStructureAt(end).GetCarEndMarker(path[path.Count - 2]);
             var g = GetCarPath(path, startMarker.Position, endMarker.Position);
+            
             return g == null ? new List<Vector3>() : g.ToList();
         }
 
@@ -57,6 +57,7 @@ namespace AI
             foreach (var g in endStructure.RoadPosition)
             {
                 var carPath = GetCarPath(startRoadPosition, g);
+
                 if (!carPath.Any()) continue;
                 SpawnCar(carPath, startRoadPosition);
                 return true;
@@ -70,6 +71,7 @@ namespace AI
             Vector3 endPosition)
         {
             var carGraph = CreatACarGraph(path);
+
             if (carGraph == null) return null;
             Debug.Log(carGraph);
             return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
@@ -77,6 +79,7 @@ namespace AI
 
         private AdjacencyGraph CreatACarGraph(IReadOnlyList<Vector3Int> path)
         {
+     
             var carGraph = new AdjacencyGraph();
             var tempDictionary = new Dictionary<Marker, Vector3>();
             for (var i = 0; i < path.Count; i++)
@@ -94,7 +97,11 @@ namespace AI
                         carGraph.AddEdge(marker.Position, markerNeighbour.Position);
 
                     if (!marker.OpenForConnection || i + 1 >= path.Count) continue;
+                    Debug.Log(i + 1);
+                    Debug.Log(string.Join(" ",path));
+                    Debug.Log(string.Join(" ",placementManager.StructureDictionary.Keys));
                     var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
+                   
                     if (nextRoadPosition == null) return null;
                     if (limitDistance)
                         tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));

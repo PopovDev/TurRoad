@@ -87,6 +87,7 @@ public class PlacementManager : MonoBehaviour
     {
         var resultPath = GridSearch.AStarSearch(PlacementAGrid, new Point(startPosition.x, startPosition.z),
             new Point(endPosition.x, endPosition.z), isAgent);
+        
         return resultPath.Select(point => new Vector3Int(point.X, 0, point.Y)).ToList();
     }
 

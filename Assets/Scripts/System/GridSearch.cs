@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AI.Types;
+using UnityEngine;
 
 namespace System
 {
@@ -63,6 +64,7 @@ namespace System
                 path.Add(parent);
                 parent = parentMap[parent];
             }
+            Debug.Log(string.Join(" ",path));
             return path;
         }
     }
