@@ -12,10 +12,10 @@ public class RoadManager : MonoBehaviour
     private Vector3Int _startPosition;
     private bool _placementMode;
     private RoadFixer _roadFixer;
+
     private void Start()
     {
-        placementManager.roadManager = this;
-        placementManager.roadFixer =_roadFixer=  GetComponent<RoadFixer>();;
+        _roadFixer = GetComponent<RoadFixer>();
     }
 
     public void PlaceRoad(Vector3Int position)
@@ -34,7 +34,6 @@ public class RoadManager : MonoBehaviour
 
             temporaryPlacementPositions.Add(position);
             placementManager.PlaceTemporaryStructure(position, _roadFixer.deadEnd, CellType.Road);
-
         }
         else
         {
@@ -56,13 +55,13 @@ public class RoadManager : MonoBehaviour
                 {
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
-                }  
+                }
+
                 placementManager.PlaceTemporaryStructure(temporaryPosition, _roadFixer.deadEnd, CellType.Road);
             }
         }
 
         FixRoadPrefabs();
-
     }
 
     public void FixRoadPrefabs()
@@ -77,6 +76,7 @@ public class RoadManager : MonoBehaviour
                 roadPositionsToRecheck.Add(roadPosition);
             }
         }
+
         foreach (var positionToFix in roadPositionsToRecheck)
         {
             _roadFixer.FixRoadAtPosition(placementManager, positionToFix);
