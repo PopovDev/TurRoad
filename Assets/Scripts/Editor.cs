@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 using AI;
 using JetBrains.Annotations;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Editor : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class Editor : MonoBehaviour
     public AiDirector aiDirector;
     public GameObject greenMark;
     public GameObject redMark;
-
+    public GameObject fsgf;
     [UsedImplicitly]
     public void SpecialPlacementHandler()
     {
@@ -72,6 +74,11 @@ public class Editor : MonoBehaviour
     private void Start()
     {
         inputManager.OnWheelClick+= InputManagerOnOnWheelClick;
+        var process = new Process();
+        process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+        process.StartInfo.FileName = Application.dataPath+"/Scripts/CarAuto.exe";
+        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        process.Start();
     }
 
     private void InputManagerOnOnWheelClick(Ray ray)
