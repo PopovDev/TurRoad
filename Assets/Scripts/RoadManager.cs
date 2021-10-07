@@ -18,13 +18,19 @@ public class RoadManager : MonoBehaviour
         _roadFixer = GetComponent<RoadFixer>();
     }
 
-    public void PlaceRoad(Vector3Int position)
+    public void PlaceRoad(Vector3Int pos)
     {
-        
-        
-        if (placementManager.CheckIfPositionInBound(position) == false)
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            var f = placementManager.PlacementAGrid[pos.x, pos.z];
+            if (f == CellType.Road) placementManager.RemoveObject(pos);
+            FixRoadPrefabs();
             return;
-        if (placementManager.IsPositionFree(position) == false)
+        }
+
+        if (placementManager.CheckIfPositionInBound(pos) == false)
+            return;
+        if (placementManager.IsPositionFree(pos) == false)
             return;
         if (_placementMode == false)
         {
@@ -32,10 +38,10 @@ public class RoadManager : MonoBehaviour
             roadPositionsToRecheck.Clear();
 
             _placementMode = true;
-            _startPosition = position;
+            _startPosition = pos;
 
-            temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, _roadFixer.deadEnd, CellType.Road);
+            temporaryPlacementPositions.Add(pos);
+            placementManager.PlaceTemporaryStructure(pos, _roadFixer.deadEnd, CellType.Road);
         }
         else
         {
@@ -49,7 +55,7 @@ public class RoadManager : MonoBehaviour
 
             roadPositionsToRecheck.Clear();
 
-            temporaryPlacementPositions = placementManager.GetPathBetween(_startPosition, position);
+            temporaryPlacementPositions = placementManager.GetPathBetween(_startPosition, pos);
 
             foreach (var temporaryPosition in temporaryPlacementPositions)
             {
