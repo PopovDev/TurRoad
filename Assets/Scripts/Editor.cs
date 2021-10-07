@@ -80,7 +80,7 @@ public class Editor : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out CarController a))
             {
-                a.cam.
+                //a.cam.
                 Debug.Log(a.cam); 
             }
          
