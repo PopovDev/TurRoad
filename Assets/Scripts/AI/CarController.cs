@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AI
 {
@@ -6,6 +7,7 @@ namespace AI
     public class CarController : MonoBehaviour
     {
         private Rigidbody _rb;
+        public Camera cam;
 
         [SerializeField]
         private float power = 5;

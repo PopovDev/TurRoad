@@ -12,7 +12,6 @@ namespace AI
         [SerializeField] private GameObject carPrefab;
         private bool _cBlock;
         private bool _canPutCar;
-
         public void SpawnCar(Vector3Int position)
         {
             if (_cBlock) return;
@@ -57,7 +56,6 @@ namespace AI
             foreach (var g in endStructure.RoadPosition)
             {
                 var carPath = GetCarPath(startRoadPosition, g);
-
                 if (!carPath.Any()) continue;
                 SpawnCar(carPath, startRoadPosition);
                 return true;

@@ -7,6 +7,7 @@ public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
 
+    
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
     public List<Vector3Int> roadPositionsToRecheck = new List<Vector3Int>();
     private Vector3Int _startPosition;

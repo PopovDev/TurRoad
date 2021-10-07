@@ -53,6 +53,7 @@ public class Editor : MonoBehaviour
         inputManager.ClearEvents();
         greenMark.SetActive(false);
     }
+    
 
     private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
@@ -65,6 +66,25 @@ public class Editor : MonoBehaviour
     {
         if (!Physics.Raycast(ray, out var hit, Mathf.Infinity)) return null;
         return Vector3Int.RoundToInt(hit.point);
-        ;
+        
+    }
+
+    private void Start()
+    {
+        inputManager.OnWheelClick+= InputManagerOnOnWheelClick;
+    }
+
+    private void InputManagerOnOnWheelClick(Ray ray)
+    {
+        if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.TryGetComponent(out CarController a))
+            {
+                a.cam.
+                Debug.Log(a.cam); 
+            }
+         
+        }
+        
     }
 }
