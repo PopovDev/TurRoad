@@ -74,11 +74,7 @@ public class Editor : MonoBehaviour
     private void Start()
     {
         inputManager.OnWheelClick+= InputManagerOnOnWheelClick;
-        var process = new Process();
-        process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-        process.StartInfo.FileName = Application.dataPath+"/Scripts/CarAuto.exe";
-        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        process.Start();
+    
     }
 
     private void InputManagerOnOnWheelClick(Ray ray)
