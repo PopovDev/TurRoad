@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
 
-    
+
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
     public List<Vector3Int> roadPositionsToRecheck = new List<Vector3Int>();
     private Vector3Int _startPosition;
@@ -19,15 +20,17 @@ public class RoadManager : MonoBehaviour
         _roadFixer = GetComponent<RoadFixer>();
     }
 
-    public void PlaceRoad(Vector3Int pos)
+    public async Task PlaceRoad(Vector3Int pos, bool canBreak )
     {
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            var f = placementManager.PlacementAGrid[pos.x, pos.z];
-            if (f == CellType.Road) placementManager.RemoveObject(pos);
-            FixRoadPrefabs();
-            return;
-        }
+        await Task.Yield();
+        if (canBreak)
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                var f = placementManager.PlacementAGrid[pos.x, pos.z];
+                if (f == CellType.Road) placementManager.RemoveObject(pos);
+                FixRoadPrefabs();
+                return;
+            }
 
         if (placementManager.CheckIfPositionInBound(pos) == false)
             return;
@@ -99,4 +102,6 @@ public class RoadManager : MonoBehaviour
         temporaryPlacementPositions.Clear();
         _startPosition = Vector3Int.zero;
     }
+
+    public Task PlaceRoad(Vector3Int obj) => PlaceRoad(obj,true);
 }

@@ -2,6 +2,8 @@ using System;
 
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -25,7 +27,7 @@ public class MapSaver : MonoBehaviour
 
         public List<KeyValuePair<Point3, KeyValuePair<CellType, int>>> Objects { get; set; }
     }
-    private void SavD()
+    private void SaveD()
     {
         var save = new Save
         {
@@ -44,10 +46,15 @@ public class MapSaver : MonoBehaviour
 
         File.WriteAllText("Assets/data.json", JsonConvert.SerializeObject(save));
     }
-    private void LoadD()
+    private async Task LoadD()
     {
-        var save = JsonConvert.DeserializeObject<Save>(File.ReadAllText("Assets/data.json"));
-        Debug.Log(save.Name);
+        var save = new Save();
+        await Task.Run(() =>
+        {
+            save = JsonConvert.DeserializeObject<Save>(File.ReadAllText("Assets/data.json"));
+            Debug.Log(save.Name);
+
+        });
         foreach (var obj in save.Objects)
         {
             var pos = obj.Key.ToVec();
@@ -55,7 +62,7 @@ public class MapSaver : MonoBehaviour
             var cell = obj.Value.Key;
             if (index == -1)
             {
-                roadManager.PlaceRoad(pos);
+                await roadManager.PlaceRoad(pos,false);
                 roadManager.FinishPlacingRoad();
             }
             else
@@ -65,9 +72,10 @@ public class MapSaver : MonoBehaviour
     }
        
 
-    private void Update()
+    private async void Update()
     {
-        if (Input.GetKeyUp(KeyCode.K)) LoadD();
+        if (Input.GetKeyUp(KeyCode.K)) await LoadD();
+        if (Input.GetKeyUp(KeyCode.M)) SaveD();
 
     }
 }

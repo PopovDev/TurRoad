@@ -24,11 +24,7 @@ namespace AI
 
         public void Move(Vector2 movementInput) => movementVector = movementInput;
 
-        private void Start()
-        {
-         
-        }
- 
+  
         private void FixedUpdate()
         {
             if(_rb.velocity.magnitude < maxSpeed)

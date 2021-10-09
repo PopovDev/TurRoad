@@ -13,13 +13,13 @@ public class Editor : MonoBehaviour
     public AiDirector aiDirector;
     public GameObject greenMark;
     public GameObject redMark;
-    public GameObject fsgf;
     [UsedImplicitly]
     public void SpecialPlacementHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceSpecial, pos);
-        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark,redMark,true), pos);
+        inputManager.OnMouseHover += pos =>
+            ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark, redMark, true), pos);
         inputManager.OnMouseUp += structureManager.FinishPlace;
     }
 
@@ -28,7 +28,8 @@ public class Editor : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += pos => ProcessInputAndCall(structureManager.PlaceHouse, pos);
-        inputManager.OnMouseHover += pos => ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark,redMark,false), pos);
+        inputManager.OnMouseHover += pos =>
+            ProcessInputAndCall(i => structureManager.PlaceHover(i, greenMark, redMark, false), pos);
         inputManager.OnMouseUp += structureManager.FinishPlace;
     }
 
@@ -45,7 +46,7 @@ public class Editor : MonoBehaviour
     public void RoadPlacementHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += pos => ProcessInputAndCall(roadManager.PlaceRoad, pos);
+        inputManager.OnMouseClick += pos => ProcessInputAndCall((i) => { roadManager.PlaceRoad(i); }, pos);
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
 
@@ -55,7 +56,7 @@ public class Editor : MonoBehaviour
         inputManager.ClearEvents();
         greenMark.SetActive(false);
     }
-    
+
 
     private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
@@ -68,13 +69,11 @@ public class Editor : MonoBehaviour
     {
         if (!Physics.Raycast(ray, out var hit, Mathf.Infinity)) return null;
         return Vector3Int.RoundToInt(hit.point);
-        
     }
 
     private void Start()
     {
-        inputManager.OnWheelClick+= InputManagerOnOnWheelClick;
-    
+        inputManager.OnWheelClick += InputManagerOnOnWheelClick;
     }
 
     private void InputManagerOnOnWheelClick(Ray ray)
@@ -84,10 +83,8 @@ public class Editor : MonoBehaviour
             if (hit.collider.gameObject.TryGetComponent(out CarController a))
             {
                 //a.cam.
-                Debug.Log(a.cam); 
+                Debug.Log(a.cam);
             }
-         
         }
-        
     }
 }
