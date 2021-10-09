@@ -10,20 +10,32 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private bool camUp = true;
     [SerializeField]private float speedUp = 2f;
     public event Action<bool> CamModeChanged;
+    private Vector3 _inputVector;
+    private float _scrollInput;
     private void Start() => _gameCamera = GetComponent<Camera>();
-    public void MoveCamera(float sceneSpeed)
+
+    private void MoveCamera()
     {
-        var inputVector = new Vector3(Input.GetAxisRaw("Horizontal"),0, Input.GetAxisRaw("Vertical"));
+        var ax = Input.GetAxisRaw("Horizontal");
+        var az = Input.GetAxisRaw("Vertical");
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            ax *= speedUp;
+            az *= speedUp;
+        }
+        _inputVector = new Vector3(Mathf.Lerp(_inputVector.x,ax,0.02f),0, Mathf.Lerp(_inputVector.z,az,0.02f));
+        Debug.Log(_inputVector);
+        var movementVector = Quaternion.Euler(0, 30, 0) * _inputVector;
         
-        var movementVector = Quaternion.Euler(0, 30, 0) * inputVector;
-        if (Input.GetKey(KeyCode.LeftShift)) movementVector *= speedUp;
-        _gameCamera.transform.position += movementVector * speed * Time.deltaTime / sceneSpeed;
+        _gameCamera.transform.position += movementVector * speed* 0.005f;
     }
 
     private void Update()
     {
         CamModeChanged?.Invoke(camUp);
-        var scrollInput = Input.GetAxis("Mouse ScrollWheel") * sensitivity;
-        _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - scrollInput, minSize, maxSize);
+        var ay =  Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+        _scrollInput = Mathf.Lerp(_scrollInput, ay, 0.012f);
+        _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - _scrollInput, minSize, maxSize);
+        MoveCamera();
     }
 }

@@ -69,7 +69,6 @@ public class LightWorker : MonoBehaviour
     {
         for(;;)
         {
-            Debug.Log(this);
             yield return new WaitForSecondsRealtime(0.1f);
             if(this==null) yield break;
             foreach (var controller in FindObjectsOfType<LightController>().Where(controller => lightSettings.All(x => x.control != controller)))

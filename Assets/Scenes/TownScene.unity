@@ -4071,7 +4071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMovement: {fileID: 2044889014}
-  sceneSpeed: 0.1
+  sceneSpeed: 0
 --- !u!4 &2039921796
 Transform:
   m_ObjectHideFlags: 0
@@ -4553,7 +4553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7656665347155683448, guid: c80917eff379e674b84ed596c9788a2d, type: 3}
       propertyPath: maxSize
-      value: 12
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7656665347155683448, guid: c80917eff379e674b84ed596c9788a2d, type: 3}
       propertyPath: speedUp
