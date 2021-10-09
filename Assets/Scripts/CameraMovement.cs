@@ -24,9 +24,7 @@ public class CameraMovement : MonoBehaviour
             az *= speedUp;
         }
         _inputVector = new Vector3(Mathf.Lerp(_inputVector.x,ax,0.02f),0, Mathf.Lerp(_inputVector.z,az,0.02f));
-        Debug.Log(_inputVector);
         var movementVector = Quaternion.Euler(0, 30, 0) * _inputVector;
-        
         _gameCamera.transform.position += movementVector * speed* 0.005f;
     }
 
