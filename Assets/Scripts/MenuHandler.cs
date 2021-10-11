@@ -5,6 +5,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class MenuHandler : MonoBehaviour
 { 
@@ -17,12 +18,14 @@ public class MenuHandler : MonoBehaviour
     }
     [SerializeField]
     private List<KeyMh> handlers; 
-    
+    [CanBeNull] public UnityEvent load;
+
     private void OnEnable()
     {
         var obj = FindObjectsOfType<MenuHandler>();
         foreach (var menuHandler in obj.Where(x=>x!=this))
             menuHandler.gameObject.SetActive(false);
+        load?.Invoke();
     }
     private void Update()
     {

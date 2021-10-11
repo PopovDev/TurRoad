@@ -18,12 +18,12 @@ namespace AI.TrafficLights
         [Space]
         [SerializeField] private Transform normal;
         [SerializeField] private Transform up;
-        private CameraMovement _cam;
+        private CarEditor _car;
 
         private void Start()
         {
-            _cam = FindObjectOfType<CameraMovement>();
-            _cam.CamModeChanged += CamOnCamModeChanged;
+            _car = FindObjectOfType<CarEditor>();
+            _car.CamModeChanged += CamOnCamModeChanged;
         }
 
         public void SetColor(bool r, bool y, bool g)
@@ -33,7 +33,7 @@ namespace AI.TrafficLights
             greenLight.material = g ? green : gray;
         }
 
-        private void OnDestroy() => _cam.CamModeChanged -= CamOnCamModeChanged;
+        private void OnDestroy() => _car.CamModeChanged -= CamOnCamModeChanged;
 
         private void CamOnCamModeChanged(bool camUp)
         {

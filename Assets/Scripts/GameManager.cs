@@ -23,16 +23,7 @@ public class GameManager : MonoBehaviour
             true => 0.525f,
             false => speedSlider.value
         };
-
-        if (t <= 0.5f)
-        {
-            Time.timeScale = t;  
-        }
-        else
-        {
-            Time.timeScale = (t-0.5f)*20+0.5f;  
-        }
-
+        Time.timeScale = (t <= 0.5f ? t : (t - 0.5f) * 20 + 0.5f);
         if (_paused)
         {
             speedText.text = @"Пауза";

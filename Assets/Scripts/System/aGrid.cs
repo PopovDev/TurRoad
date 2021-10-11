@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AI.Types;
+using UnityEngine;
 
 namespace System
 {
@@ -52,6 +53,9 @@ namespace System
                         _houseStructure.Add(new Point(i, j));
                         break;
                     case CellType.Empty:
+                        _roadList.RemoveAll(x => x.Equals(new Point(i, j)));
+                        _specialStructure.RemoveAll(x => x.Equals(new Point(i, j)));
+                        _houseStructure.RemoveAll(x => x.Equals(new Point(i, j)));
                         break;
                     case CellType.None:
                         break;

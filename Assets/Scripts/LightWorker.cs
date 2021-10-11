@@ -21,9 +21,10 @@ public class LightWorker : MonoBehaviour
         public float yellowOneTime = 2;
         public float n2Time =10;
         public float yellowTwoTime = 2;
-
+        public bool working = true;
         public void Work()
         {
+            if(!working) return;
             switch (control.state)
             {
                 case LightController.LightState.N1:
@@ -67,7 +68,7 @@ public class LightWorker : MonoBehaviour
     public List<LightSetting> lightSettings;
     private IEnumerator Check() 
     {
-        for(;;)
+        while (true)
         {
             yield return new WaitForSecondsRealtime(0.1f);
             if(this==null) yield break;
@@ -82,8 +83,9 @@ public class LightWorker : MonoBehaviour
     }
     private IEnumerator Work() 
     {
-        for(;;)
+        while (true)
         {
+            lightSettings.RemoveAll(x => x.control == null);
             foreach (var g in lightSettings) g.Work();
             yield return new WaitForSecondsRealtime(0.01f);
             if(this==null) yield break;

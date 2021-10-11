@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using AI;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,11 +7,15 @@ using Debug = UnityEngine.Debug;
 public class Editor : MonoBehaviour
 {
     public InputManager inputManager;
+    private CarEditor _carEditor;
     public StructureManager structureManager;
     public RoadManager roadManager;
     public AiDirector aiDirector;
     public GameObject greenMark;
     public GameObject redMark;
+
+    private void Start() => _carEditor = GetComponent<CarEditor>();
+
     [UsedImplicitly]
     public void SpecialPlacementHandler()
     {
@@ -55,8 +58,10 @@ public class Editor : MonoBehaviour
     {
         inputManager.ClearEvents();
         greenMark.SetActive(false);
+        redMark.SetActive(false);
+        greenMark.transform.position =Vector3.zero;
+        redMark.transform.position =Vector3.zero;
     }
-
 
     private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
     {
@@ -70,21 +75,11 @@ public class Editor : MonoBehaviour
         if (!Physics.Raycast(ray, out var hit, Mathf.Infinity)) return null;
         return Vector3Int.RoundToInt(hit.point);
     }
-
-    private void Start()
+    [UsedImplicitly]
+    public void CarEditHandler(MenuHandler carMenu)
     {
-        inputManager.OnWheelClick += InputManagerOnOnWheelClick;
-    }
-
-    private void InputManagerOnOnWheelClick(Ray ray)
-    {
-        if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
-        {
-            if (hit.collider.gameObject.TryGetComponent(out CarController a))
-            {
-                //a.cam.
-                Debug.Log(a.cam);
-            }
-        }
+        ClearInputActions();
+        inputManager.OnMouseHover += pos => _carEditor.CarHover(pos, greenMark);
+        inputManager.OnMouseUp += () => _carEditor.OpenSettings(carMenu,ClearInputActions);
     }
 }

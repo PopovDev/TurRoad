@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float sensitivity = 10;
     [SerializeField] private bool camUp = true;
     [SerializeField]private float speedUp = 2f;
-    public event Action<bool> CamModeChanged;
+
     private Vector3 _inputVector;
     private float _scrollInput;
     private void Start() => _gameCamera = GetComponent<Camera>();
@@ -30,7 +30,6 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        CamModeChanged?.Invoke(camUp);
         var ay =  Input.GetAxis("Mouse ScrollWheel") * sensitivity;
         _scrollInput = Mathf.Lerp(_scrollInput, ay, 0.012f);
         _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - _scrollInput, minSize, maxSize);

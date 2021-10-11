@@ -11,11 +11,11 @@ namespace AI
         public Camera cam;
 
         [SerializeField]
-        private float power = 5;
+        private float power;
         [SerializeField]
-        private float torque = 0.5f;
+        private float torque;
         [SerializeField]
-        private float maxSpeed = 5;
+        private float maxSpeed;
 
         [SerializeField]
         private Vector2 movementVector;
