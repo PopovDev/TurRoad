@@ -25,6 +25,11 @@ public class LightWorker : MonoBehaviour
         public void Work()
         {
             if(!working) return;
+            if (control.Stopped)
+            {
+                changed = Time.time;
+                return;
+            }
             switch (control.state)
             {
                 case LightController.LightState.N1:

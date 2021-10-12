@@ -14,6 +14,7 @@ namespace AI.TrafficLights
         [SerializeField] private List<TrafficLight> oneGroup;
         [SerializeField] private  List<TrafficLight> twoGroup;
 
+        internal bool Stopped = false;
         public enum LightState
         {
             N1,

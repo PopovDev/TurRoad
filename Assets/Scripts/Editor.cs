@@ -8,13 +8,18 @@ public class Editor : MonoBehaviour
 {
     public InputManager inputManager;
     private CarEditor _carEditor;
+    private LightEditor _lightEditor;
     public StructureManager structureManager;
     public RoadManager roadManager;
     public AiDirector aiDirector;
     public GameObject greenMark;
     public GameObject redMark;
 
-    private void Start() => _carEditor = GetComponent<CarEditor>();
+    private void Start()
+    {
+        _carEditor = GetComponent<CarEditor>();
+        _lightEditor = GetComponent<LightEditor>();
+    }
 
     [UsedImplicitly]
     public void SpecialPlacementHandler()
@@ -81,5 +86,12 @@ public class Editor : MonoBehaviour
         ClearInputActions();
         inputManager.OnMouseHover += pos => _carEditor.CarHover(pos, greenMark);
         inputManager.OnMouseUp += () => _carEditor.OpenSettings(carMenu,ClearInputActions);
+    }
+    [UsedImplicitly]
+    public void LightEditHandler(MenuHandler lightMenu)
+    {
+        ClearInputActions();
+        inputManager.OnMouseHover += pos => _lightEditor.LightHover(pos, greenMark);
+        inputManager.OnMouseUp += () => _lightEditor.OpenSettings(lightMenu,ClearInputActions);
     }
 }

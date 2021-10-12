@@ -7,7 +7,6 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float maxSize = 5f;
     [SerializeField] private float minSize = 0.5f;
     [SerializeField] private float sensitivity = 10;
-    [SerializeField] private bool camUp = true;
     [SerializeField]private float speedUp = 2f;
 
     private Vector3 _inputVector;
