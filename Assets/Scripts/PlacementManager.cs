@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AI;
 using AI.Types;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -87,10 +88,11 @@ public class PlacementManager : MonoBehaviour
 
         structure.transform.SetParent(transform);
         structure.transform.localPosition = position;
+        if (type == CellType.SpecialStructure) structure.AddComponent<SpecialConf>();
 
         var structureModel = structure.AddComponent<StructureModel>();
         var i = Array.IndexOf(_scObjs.ToArray(), structurePrefab);
-        structureModel.CreateModel(structurePrefab, i);
+        structureModel.CreateModel(structurePrefab, i,type);
         return structureModel;
     }
 

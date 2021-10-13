@@ -8,12 +8,14 @@ namespace System
     {
         private float _yHeight;
         public int ObjIndex { get; private set; }
+        public CellType CellT { get; private set; }
 
         public IReadOnlyList<Vector3Int> RoadPosition { get; set; }
 
-        public void CreateModel(GameObject obj, int i= -1)
+        public void CreateModel(GameObject obj, int i = -1, CellType cellType= CellType.Road)
         {
             ObjIndex = i;
+            CellT = cellType;
             var structure = Instantiate(obj, transform);
             _yHeight = structure.transform.position.y;
         }

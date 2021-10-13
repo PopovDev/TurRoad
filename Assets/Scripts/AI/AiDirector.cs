@@ -12,20 +12,29 @@ namespace AI
         [SerializeField] private GameObject carPrefab;
         private bool _cBlock;
         private bool _canPutCar;
-        public void SpawnCar(Vector3Int position)
+
+        public bool SpawnCar(Vector3Int position, bool abs = false, StructureModel endStructure = null)
         {
-            if (_cBlock) return;
-            if (!_canPutCar) return;
+            if (!abs)
+                if (_cBlock)
+                    return false;
+            if (!abs)
+                if (!_canPutCar)
+                    return false;
+
             var iter = 0;
-            while (!TrySpawnACar(position, placementManager.GetRandomSpecialStructure()))
+            bool bn;
+            while (!(bn = TrySpawnACar(position,endStructure ? endStructure : placementManager.GetRandomSpecialStructure())))
                 if (iter++ > 100)
                     break;
-            _cBlock = true;
+            if (!abs) _cBlock = true;
+            return bn;
         }
 
         public void MarkHover(Vector3Int position, GameObject mark)
         {
-            var g = placementManager.GetAllHouses().Any(x => (x.RoadPosition?? new List<Vector3Int>()).Contains(position));
+            var g = placementManager.GetAllHouses()
+                .Any(x => (x.RoadPosition ?? new List<Vector3Int>()).Contains(position));
             mark.SetActive(_canPutCar = g);
             if (g) mark.transform.position = position;
         }
@@ -40,7 +49,7 @@ namespace AI
             var startMarker = placementManager.GetStructureAt(start).GetCarSpawnMarker(path[1]);
             var endMarker = placementManager.GetStructureAt(end).GetCarEndMarker(path[path.Count - 2]);
             var g = GetCarPath(path, startMarker.Position, endMarker.Position);
-            
+
             return g == null ? new List<Vector3>() : g.ToList();
         }
 
@@ -77,7 +86,6 @@ namespace AI
 
         private AdjacencyGraph CreatACarGraph(IReadOnlyList<Vector3Int> path)
         {
-     
             var carGraph = new AdjacencyGraph();
             var tempDictionary = new Dictionary<Marker, Vector3>();
             for (var i = 0; i < path.Count; i++)
@@ -96,10 +104,10 @@ namespace AI
 
                     if (!marker.OpenForConnection || i + 1 >= path.Count) continue;
                     Debug.Log(i + 1);
-                    Debug.Log(string.Join(" ",path));
-                    Debug.Log(string.Join(" ",placementManager.StructureDictionary.Keys));
+                    Debug.Log(string.Join(" ", path));
+                    Debug.Log(string.Join(" ", placementManager.StructureDictionary.Keys));
                     var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
-                   
+
                     if (nextRoadPosition == null) return null;
                     if (limitDistance)
                         tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));

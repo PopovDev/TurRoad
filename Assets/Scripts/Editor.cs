@@ -45,7 +45,7 @@ public class Editor : MonoBehaviour
     public void CarPlacementHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += pos => ProcessInputAndCall(aiDirector.SpawnCar, pos);
+        inputManager.OnMouseClick += pos => ProcessInputAndCall((p)=>aiDirector.SpawnCar(p), pos);
         inputManager.OnMouseHover += pos => ProcessInputAndCall(i => aiDirector.MarkHover(i, greenMark), pos);
         inputManager.OnMouseUp += aiDirector.FinishSpawnCar;
     }

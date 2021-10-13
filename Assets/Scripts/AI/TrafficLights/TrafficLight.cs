@@ -24,6 +24,7 @@ namespace AI.TrafficLights
         {
             _car = FindObjectOfType<CarEditor>();
             _car.CamModeChanged += CamOnCamModeChanged;
+            CamOnCamModeChanged(true);
         }
 
         public void SetColor(bool r, bool y, bool g)

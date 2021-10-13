@@ -189,6 +189,7 @@ MonoBehaviour:
   power: 10
   torque: 0.02
   maxSpeed: 0.4
+  speedScale: 1
   movementVector: {x: 0, y: 0}
 --- !u!114 &-1274727206583111556
 MonoBehaviour:
