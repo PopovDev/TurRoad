@@ -12,9 +12,10 @@ public class MapSaver : MonoBehaviour
     public RoadManager roadManager;
     public PlacementManager placementManager;
     public Planner planner;
-
+    public static string Path { get; set; }
+    public static bool LoadFromFile { get; set; }
     [Serializable]
-    private class Save
+    public class Save
     {
         public string Name { get; set; }
 
@@ -27,7 +28,7 @@ public class MapSaver : MonoBehaviour
         }
 
         [Serializable]
-        internal class PlanData
+        public class PlanData
         {
             public Point3 pos;
             public int carCount;
@@ -68,7 +69,7 @@ public class MapSaver : MonoBehaviour
             }
         }
 
-        File.WriteAllText("Assets/data.json", JsonConvert.SerializeObject(save));
+        File.WriteAllText(Path, JsonConvert.SerializeObject(save));
     }
 
     private async Task LoadD()
@@ -76,7 +77,7 @@ public class MapSaver : MonoBehaviour
         var save = new Save();
         await Task.Run(() =>
         {
-            save = JsonConvert.DeserializeObject<Save>(File.ReadAllText("Assets/data.json"));
+            save = JsonConvert.DeserializeObject<Save>(File.ReadAllText(Path));
             Debug.Log(save.Name);
         });
         foreach (var obj in save.Objects)
@@ -106,10 +107,17 @@ public class MapSaver : MonoBehaviour
  
     }
 
-
-    private async void Update()
+    private async void Start()
     {
-        if (Input.GetKeyUp(KeyCode.K)) await LoadD();
+        if (LoadFromFile)
+        {
+            await LoadD();
+        }
+    }
+
+    private void Update()
+    {
+      
         if (Input.GetKeyUp(KeyCode.M)) SaveD();
     }
 }
