@@ -11,7 +11,11 @@ public class CameraMovement : MonoBehaviour
 
     private Vector3 _inputVector;
     private float _scrollInput;
-    private void Start() => _gameCamera = GetComponent<Camera>();
+    private void Start()
+    {
+        _gameCamera = GetComponent<Camera>();
+        Application.targetFrameRate = 60;
+    }
 
     private void MoveCamera()
     {
@@ -22,15 +26,15 @@ public class CameraMovement : MonoBehaviour
             ax *= speedUp;
             az *= speedUp;
         }
-        _inputVector = new Vector3(Mathf.Lerp(_inputVector.x,ax,0.02f),0, Mathf.Lerp(_inputVector.z,az,0.02f));
+        _inputVector = new Vector3(Mathf.Lerp(_inputVector.x,ax,0.3f),0, Mathf.Lerp(_inputVector.z,az,0.3f));
         var movementVector = Quaternion.Euler(0, 30, 0) * _inputVector;
-        _gameCamera.transform.position += movementVector * speed* 0.005f;
+        _gameCamera.transform.position += movementVector * speed* 0.028f;
     }
 
     private void Update()
     {
         var ay =  Input.GetAxis("Mouse ScrollWheel") * sensitivity;
-        _scrollInput = Mathf.Lerp(_scrollInput, ay, 0.012f);
+        _scrollInput = Mathf.Lerp(_scrollInput, ay, 0.05f);
         _gameCamera.orthographicSize = Mathf.Clamp(_gameCamera.orthographicSize - _scrollInput, minSize, maxSize);
         MoveCamera();
     }

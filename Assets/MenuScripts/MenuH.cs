@@ -51,7 +51,7 @@ public class MenuH : MonoBehaviour
               var g =   JsonConvert.DeserializeObject<MapSaver.Save>(File.ReadAllText(loadSimHInputField.text));
               MapSaver.Path = loadSimHInputField.text;
               MapSaver.LoadFromFile = true;
-              SceneManager.LoadScene(sceneBuildIndex: 1, LoadSceneMode.Single);
+              SceneManager.LoadScene(1, LoadSceneMode.Single);
 
             }
             catch (Exception e)
