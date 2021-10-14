@@ -17,6 +17,7 @@ namespace System
         {
             if (vt3.HasValue)
                 Pos = vt3.Value;
+            ObjIndex = i;
             CellT = cellType;
             var structure = Instantiate(obj, transform);
             _yHeight = structure.transform.position.y;

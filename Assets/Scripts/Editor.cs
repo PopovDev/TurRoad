@@ -68,6 +68,7 @@ public class Editor : MonoBehaviour
         redMark.SetActive(false);
         greenMark.transform.position =Vector3.zero;
         redMark.transform.position =Vector3.zero;
+        Debug.Log("a1");
     }
 
     private static void ProcessInputAndCall(Action<Vector3Int> callback, Ray ray)
@@ -92,7 +93,7 @@ public class Editor : MonoBehaviour
     [UsedImplicitly]
     public void LightEditHandler(MenuHandler lightMenu)
     {
-        ClearInputActions();
+        ClearInputActions(); 
         inputManager.OnMouseHover += pos => _lightEditor.LightHover(pos, greenMark);
         inputManager.OnMouseUp += () => _lightEditor.OpenSettings(lightMenu,ClearInputActions);
     }
@@ -101,6 +102,7 @@ public class Editor : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseHover += pos => _houseEditor.HouseHover(pos, greenMark);
-        inputManager.OnMouseUp += () => _carEditor.OpenSettings(carMenu,ClearInputActions);
+        inputManager.OnMouseUp += () => _houseEditor.OpenSettings(carMenu,ClearInputActions);
+
     }
 }
