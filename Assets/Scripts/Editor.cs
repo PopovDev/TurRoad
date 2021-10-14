@@ -9,6 +9,7 @@ public class Editor : MonoBehaviour
     public InputManager inputManager;
     private CarEditor _carEditor;
     private LightEditor _lightEditor;
+    private HouseEditor _houseEditor;
     public StructureManager structureManager;
     public RoadManager roadManager;
     public AiDirector aiDirector;
@@ -19,6 +20,7 @@ public class Editor : MonoBehaviour
     {
         _carEditor = GetComponent<CarEditor>();
         _lightEditor = GetComponent<LightEditor>();
+        _houseEditor = GetComponent<HouseEditor>();
     }
 
     [UsedImplicitly]
@@ -93,5 +95,12 @@ public class Editor : MonoBehaviour
         ClearInputActions();
         inputManager.OnMouseHover += pos => _lightEditor.LightHover(pos, greenMark);
         inputManager.OnMouseUp += () => _lightEditor.OpenSettings(lightMenu,ClearInputActions);
+    }
+    [UsedImplicitly]
+    public void HouseEditHandler(MenuHandler carMenu)
+    {
+        ClearInputActions();
+        inputManager.OnMouseHover += pos => _houseEditor.HouseHover(pos, greenMark);
+        inputManager.OnMouseUp += () => _carEditor.OpenSettings(carMenu,ClearInputActions);
     }
 }

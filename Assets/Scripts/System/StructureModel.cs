@@ -9,12 +9,14 @@ namespace System
         private float _yHeight;
         public int ObjIndex { get; private set; }
         public CellType CellT { get; private set; }
+        public Vector3Int Pos { get; private set; }
 
         public IReadOnlyList<Vector3Int> RoadPosition { get; set; }
 
-        public void CreateModel(GameObject obj, int i = -1, CellType cellType= CellType.Road)
+        public void CreateModel(GameObject obj, int i = -1, CellType cellType = CellType.Road, Vector3Int? vt3 = null)
         {
-            ObjIndex = i;
+            if (vt3.HasValue)
+                Pos = vt3.Value;
             CellT = cellType;
             var structure = Instantiate(obj, transform);
             _yHeight = structure.transform.position.y;

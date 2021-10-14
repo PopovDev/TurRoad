@@ -5,11 +5,14 @@ using System.Linq;
 using AI;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Planner : MonoBehaviour
 {
     [SerializeField] private AiDirector aiDirector;
+    [SerializeField] private PlacementManager placementManager;
+
     [Serializable]
     public class Plan
     {
@@ -27,7 +30,18 @@ public class Planner : MonoBehaviour
         {
             if(gameObject == null)
                 yield break;
-            yield return new WaitForSecondsRealtime(0.01f);
+            yield return new WaitForSecondsRealtime(0.1f);
+            var toRemove = plans.Where(g => g.house == null).ToList();
+            plans.RemoveAll(x => toRemove.Contains(x));
+            foreach (var h in placementManager.GetAllHouses().Where(h => plans.All(x => x.house != h)))
+            {
+                plans.Add(new Plan { carCount = 0, house = h, interval = 20, intervalP = 20 });
+            }
+
+            foreach (var h in plans.Where(h => placementManager.GetAllHouses().All(x => x != h.house)))
+            {
+                plans.RemoveAll(x => x.house);
+            }
             foreach (var j in plans.Where(x=>x.house!=null).Where(g => g.intervalP + g.interval < Time.time))
             {
                 if (j.carCount <= 0) continue;

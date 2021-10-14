@@ -92,7 +92,7 @@ public class PlacementManager : MonoBehaviour
 
         var structureModel = structure.AddComponent<StructureModel>();
         var i = Array.IndexOf(_scObjs.ToArray(), structurePrefab);
-        structureModel.CreateModel(structurePrefab, i,type);
+        structureModel.CreateModel(structurePrefab, i,type,position);
         return structureModel;
     }
 
