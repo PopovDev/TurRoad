@@ -95,7 +95,7 @@ public class LightEditor : MonoBehaviour
         n2S.onValueChanged.Invoke(_selectedLightsSetting!.yellowOneTime);
         n3S.onValueChanged.Invoke(_selectedLightsSetting!.n2Time);
         n4S.onValueChanged.Invoke(_selectedLightsSetting!.yellowTwoTime);
-        lightStopBtnText.text = _selectedLights.Stopped ?@"Запустить" : @"Заморозить";
+        lightStopBtnText.text = _selectedLights.Stopped ?@"Запустити" : @"Зупинити";
     }
     [UsedImplicitly]
     public void ExitSettings()
