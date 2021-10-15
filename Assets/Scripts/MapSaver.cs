@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class MapSaver : MonoBehaviour
@@ -12,8 +14,11 @@ public class MapSaver : MonoBehaviour
     public RoadManager roadManager;
     public PlacementManager placementManager;
     public Planner planner;
+    public Button saveBtn;
+    public Button exitBtn;
     public static string Path { get; set; }
     public static bool LoadFromFile { get; set; }
+
     [Serializable]
     public class Save
     {
@@ -94,6 +99,7 @@ public class MapSaver : MonoBehaviour
             else
                 placementManager.PlaceObjectByIndex(pos, index, cell);
         }
+
         await Task.Delay(100);
         foreach (var g in save.PlData)
         {
@@ -104,20 +110,12 @@ public class MapSaver : MonoBehaviour
                 gg.carCount = g.carCount;
             }
         }
- 
     }
 
     private async void Start()
     {
-        if (LoadFromFile)
-        {
-            await LoadD();
-        }
-    }
-
-    private void Update()
-    {
-      
-        if (Input.GetKeyUp(KeyCode.M)) SaveD();
+        exitBtn.onClick.AddListener(() => SceneManager.LoadScene(0, LoadSceneMode.Single));
+        saveBtn.onClick.AddListener(SaveD);
+        if (LoadFromFile) await LoadD();
     }
 }
