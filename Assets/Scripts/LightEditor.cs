@@ -38,7 +38,7 @@ public class LightEditor : MonoBehaviour
         lightStopBtn.onClick.AddListener(() =>
         {
            var fd =  _selectedLights.Stopped =! _selectedLights.Stopped;
-           lightStopBtnText.text = fd ?@"Запустить" : @"Заморозить";
+           lightStopBtnText.text = fd ?@"Запустити" : @"Зупинити";
         });
         n1S.onValueChanged.AddListener((g) =>
         {

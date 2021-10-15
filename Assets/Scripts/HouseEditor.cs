@@ -43,7 +43,7 @@ public class HouseEditor : MonoBehaviour
         stBtn.onClick.AddListener(() =>
         {
             _selectedCar.stop = !_selectedCar.stop;
-            stBtnText.text = _selectedCar.stop ? @"Разморозить" : @"Заморозить";
+            stBtnText.text = _selectedCar.stop ? @"Зупиниити" : @"Запустити";
         });
     }
 

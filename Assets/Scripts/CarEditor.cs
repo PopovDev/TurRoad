@@ -24,7 +24,7 @@ public class CarEditor : MonoBehaviour
         {
             if (_selectedCar == null) return;
             _selectedCar.Stop = !_selectedCar.Stop;
-            carStopBtnText.text = _selectedCar.Stop ? @"Запустить" : @"Остановить";
+            carStopBtnText.text = _selectedCar.Stop ? @"Їхати далі" : @"Зупинитися";
         });
         carSpeedSlider.onValueChanged.AddListener(CarSpeed);
     }

@@ -366,7 +366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0416\u0435\u043B\u043D\u044B\u0439 > \u0417\u0435\u043B\u0435\u043D\u044B\u0439"
+  m_Text: "\u0416\u043E\u0432\u0442\u0438\u0439 > \u0417\u0435\u043B\u0435\u043D\u0438\u0439"
 --- !u!222 &63625911
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421\u0442\u043E\u043F"
+  m_Text: "\u0417\u0443\u043F\u0438\u043D\u0438\u0442\u0438"
 --- !u!222 &117894432
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1967,7 +1967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C"
+  m_Text: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C"
 --- !u!222 &310871491
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2933,7 +2933,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e6d16d1d3bd5ada4abdb71b167585e80, type: 3}
-    m_FontSize: 20
+    m_FontSize: 19
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -2944,8 +2944,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0421\u043F\u0435\u0446.
-    \u0431\u0443\u0434\u0456\u0432\u0435\u043B\u044C"
+  m_Text: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0433\u0440\u043E\u043C\u0430\u0434\u0441\u044C\u043A\u0438\u0445
+    \u043C\u0456\u0441\u0446\u044C"
 --- !u!222 &505346644
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4976,7 +4976,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043C\u0430\u0448\u0438\u043D"
+  m_Text: "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u043C\u0430\u0448\u0438\u043D"
 --- !u!222 &925597139
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5808,7 +5808,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041A\u0440\u0430\u0441\u043D\u044B\u0439 > \u0416\u0435\u043B\u0442\u044B\u0439"
+  m_Text: "\u0427\u0435\u0440\u0432\u043E\u043D\u0438\u0439 > \u0416\u043E\u0432\u0442\u0438\u0439"
 --- !u!222 &1053457542
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7046,7 +7046,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0417\u0435\u043B\u0435\u043D\u044B\u0439 > \u0416\u0435\u043B\u043D\u044B\u0439"
+  m_Text: "\u0417\u0435\u043B\u0435\u043D\u0438\u0439 > \u0416\u043E\u0432\u0442\u0438\u0439"
 --- !u!222 &1172845239
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9097,7 +9097,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0416\u0435\u043B\u0442\u044B\u0439 > \u041A\u0440\u0430\u0441\u043D\u044B\u0439"
+  m_Text: "\u0416\u043E\u0432\u0442\u0438\u0439 > \u0427\u0435\u0440\u0432\u043E\u043D\u0438\u0439"
 --- !u!222 &1462087932
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9523,7 +9523,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421\u0442\u043E\u043F"
+  m_Text: "\u0417\u0443\u043F\u0438\u043D\u0438\u0442\u0438"
 --- !u!222 &1607076782
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10034,10 +10034,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1068805597}
   m_HandleRect: {fileID: 365055376}
   m_Direction: 0
-  m_MinValue: 0.01
-  m_MaxValue: 0.975
+  m_MinValue: 0
+  m_MaxValue: 0.725
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -10772,7 +10772,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421\u0442\u043E\u043F"
+  m_Text: "\u0417\u0443\u043F\u0438\u043D\u0438\u0442\u0438"
 --- !u!222 &1807523024
 CanvasRenderer:
   m_ObjectHideFlags: 0
