@@ -4722,7 +4722,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0410\u0432\u0442\u043E\u0440\u043E\u0432 \u0442\u0443\u0442 \u043F\u0438\u0441\u0430\u0442\u044C"
+  m_Text: 'Directed by: SharpHub'
 --- !u!222 &1768994438
 CanvasRenderer:
   m_ObjectHideFlags: 0
