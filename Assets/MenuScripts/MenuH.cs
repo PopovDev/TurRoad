@@ -25,6 +25,10 @@ public class MenuH : MonoBehaviour
     public Button pnLoadSimBack;
     public Button loadSimH;
     public InputField loadSimHInputField;
+    public GameObject createNewSimPanel;
+    public Button createNewSimPanelBackToMenu;
+    [Space] public Button createNewSm;
+     public InputField createNewSmInput;
     private void Start()
     {
         menuExit.onClick.AddListener(Application.Quit);
@@ -48,19 +52,34 @@ public class MenuH : MonoBehaviour
         {
             try
             {
-              var g =   JsonConvert.DeserializeObject<MapSaver.Save>(File.ReadAllText(loadSimHInputField.text));
-              MapSaver.Path = loadSimHInputField.text;
-              MapSaver.LoadFromFile = true;
-              SceneManager.LoadScene(1, LoadSceneMode.Single);
+                JsonConvert.DeserializeObject<MapSaver.Save>(File.ReadAllText(loadSimHInputField.text));
+                MapSaver.Path = loadSimHInputField.text;
+                MapSaver.LoadFromFile = true;
+                SceneManager.LoadScene(1, LoadSceneMode.Single);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+        });
+        createNewSim.onClick.AddListener(() => createNewSimPanel.SetActive(true));
+        createNewSimPanelBackToMenu.onClick.AddListener(() => createNewSimPanel.SetActive(false));
+        
+        createNewSm.onClick.AddListener(() =>
+        {
+            try
+            {
+                if (!createNewSmInput.text.Contains(".json")) return;
+                File.WriteAllText(createNewSmInput.text,"");
+                MapSaver.Path = createNewSmInput.text;
+                MapSaver.LoadFromFile = false;
+                SceneManager.LoadScene(1, LoadSceneMode.Single);
 
             }
             catch (Exception e)
             {
                 Debug.Log(e);
-               
             }
-           
-            
         });
     }
 }
